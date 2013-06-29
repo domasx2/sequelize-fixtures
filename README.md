@@ -7,10 +7,12 @@ Yaml and json formats are supported. Includes a grunt task.
 
 findOrCreate is used to create records, so no record duplication when identical fixtures are defined or loaded multiple times.
 
+# Install
+    
+    npm install sequelize-fixtures
 
 # Test
     
-    npm install
     npm test
 
 # Usage
@@ -60,17 +62,17 @@ findOrCreate is used to create records, so no record duplication when identical 
 ```json
     [
         {
-            model: 'Foo',
-            data: {
-                propA: 'bar',
-                propB: 1
+            "model": "Foo",
+            "data": {
+                "propA": "bar",
+                "propB": 1
             }
         },
         {
-            model: 'Foo',
-            data: {
-                propA: 'baz',
-                propB: 3
+            "model": "Foo",
+            "data": {
+                "propA": "baz",
+                "propB": 3
             }
         }
     ]
