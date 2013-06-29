@@ -1,0 +1,14 @@
+var Sequelize = require('sequelize-sqlite').sequelize,
+    sequelize = new Sequelize('database', 'username', 'password', {
+        dialect: 'sqlite',
+        storage: 'testdb.sqlite',
+        logging: false
+});
+
+exports.sequelize = sequelize;
+exports.all = [];
+['Foo', 'Bar'].forEach( function (model) {
+    var mod = sequelize.import(__dirname + '/' + model);
+    module.exports[model] = mod;
+    exports.all.push(mod);
+});

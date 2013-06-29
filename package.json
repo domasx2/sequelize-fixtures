@@ -1,0 +1,35 @@
+{
+  "name": "sequelize-fixtures",
+  "version": "0.0.1",
+  "description": "sequelize fixture loader",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha tests/test.js"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "keywords": [
+    "sequelize",
+    "fixtures"
+  ],
+  "dependencies": {
+      "js-yaml": "~2.1.0",
+      "glob": "~3.2.1"
+  },
+  "devDependencies": {
+    "sequelize-sqlite" :"*",
+    "mocha": "*",
+    "should": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/domasx2/sequelize-fixtures.git"
+  },
+  "bugs": {
+    "url": "https://github.com/domasx2/sequelize-fixtures/issues"
+  },
+  "author": "Domas Lapinskas <domasx2@gmail.com>",
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}

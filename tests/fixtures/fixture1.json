@@ -1,0 +1,23 @@
+[
+    {
+        "model":"Foo",
+        "data": {
+            "propA": "tralivali",
+            "propB": 2
+        }
+    },
+    {
+        "model":"Foo",
+        "data": {
+            "propA": "treerre",
+            "propB": 4
+        }
+    },
+    {
+        "model":"Bar",
+        "data": {
+            "propA": "1234",
+            "propB": 43
+        }
+    }
+]

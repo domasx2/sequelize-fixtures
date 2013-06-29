@@ -1,0 +1,9 @@
+fixtures:
+    - model: Foo
+      data:
+        propA: bar
+        propB: 1
+    - model: Bar 
+      data:
+        propA: buga
+        propB: 3
