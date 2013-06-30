@@ -19,9 +19,8 @@ var FOO_FIXTURE = {
 };
 
 describe('fixtures', function(){
-    it('should save fixture without id', function(done){
-        sf.load([FOO_FIXTURE], models, function (err){
-            should.not.exist(err);
+    it('should load fixture without id', function(done){
+        sf.loadFixture(FOO_FIXTURE, models, function (){
             models.Foo.find({
                 where: {
                     propA: 'bar',
@@ -36,15 +35,15 @@ describe('fixtures', function(){
         });
     });
 
-    it('should save fixture with id', function(done){
-        sf.load([{
+    it('should load fixture with id', function(done){
+        sf.loadFixture({
             model: 'Foo',
             data: {
                 id: 3,
                 propA: 'bar',
                 propB: 1
             }
-        }], models, function (err){
+        }, models, function (err){
             should.not.exist(err);
             models.Foo.find(3).success(function(foo){
                 should.exist(foo);
@@ -56,9 +55,8 @@ describe('fixtures', function(){
     });
 
     it('should not duplicate fixtures', function (done){
-        sf.load([FOO_FIXTURE], models, function (err){
-            should.not.exist(err);
-            sf.load([FOO_FIXTURE], models, function (err){
+        sf.loadFixture(FOO_FIXTURE, models, function (){
+            sf.loadFixture(FOO_FIXTURE, models, function (){
                 models.Foo.count({
                     where: {
                         propA: 'bar'
@@ -71,8 +69,8 @@ describe('fixtures', function(){
         });
     });
 
-    it('should save multiple fixtures', function(done) {
-        sf.load([FOO_FIXTURE, {
+    it('should load multiple fixtures', function(done) {
+        sf.loadFixtures([FOO_FIXTURE, {
             model: 'Foo',
             data: {
                 propA: 'baz',
@@ -87,9 +85,8 @@ describe('fixtures', function(){
         });
     });
 
-    it('should save fixtures from json', function(done){
-        sf.load('tests/fixtures/fixture1.json', models, function(err){
-            should.not.exist(err);
+    it('should load fixtures from json', function(done){
+        sf.loadFile('tests/fixtures/fixture1.json', models, function(){
             models.Foo.count().success(function(c){
                 c.should.equal(2);
                 models.Bar.count().success(function(c){
@@ -100,9 +97,22 @@ describe('fixtures', function(){
         });
     });
 
-    it('should save fixtures from multiple files via glob', function(done){
-        sf.load('tests/fixtures/*.json', models, function(err){
-            should.not.exist(err);
+    it('should load fixtures from multiple files via glob', function(done){
+        sf.loadFile('tests/fixtures/fixture*.json', models, function(){
+            should.not.exist();
+            models.Foo.count().success(function(c){
+                c.should.equal(3);
+                models.Bar.count().success(function(c){
+                    c.should.equal(1);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load fixtures from multiple files', function(done){
+        sf.loadFiles(['tests/fixtures/fixture1.json', 'tests/fixtures/fixture2.json'], models, function(){
+            should.not.exist();
             models.Foo.count().success(function(c){
                 c.should.equal(3);
                 models.Bar.count().success(function(c){
@@ -114,12 +124,24 @@ describe('fixtures', function(){
     });
 
     it('should load yaml fixtures', function(done){
-        sf.load('tests/fixtures/fixture3.yaml', models, function(err){
-            should.not.exist(err);
+        sf.loadFile('tests/fixtures/fixture3.yaml', models, function(){
             models.Foo.count().success(function(c){
                 c.should.equal(1);
                 models.Bar.count().success(function(c){
                     c.should.equal(1);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load assosication with. natural keys', function(done){
+        sf.loadFile('tests/fixtures/natkeys.yaml', models, function(){
+            models.Foo.findAll().success(function(foos){
+                foos.length.should.equal(1);
+                foos[0].getBar().success(function(bar){
+                    bar.propA.should.equal('baz');
+                    bar.propB.should.equal(1);
                     done();
                 });
             });

@@ -1,0 +1,16 @@
+fixtures:
+    - model: Bar
+      data:
+        propA: baz
+        propB: 1
+    - model: Bar
+      data:
+        propA: bzz
+        propB: 1
+    - model: Foo
+      data:
+        propA: one
+        propB: 2
+        bars:
+            propA: baz
+            propB: 1

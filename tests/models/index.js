@@ -12,3 +12,7 @@ exports.all = [];
     module.exports[model] = mod;
     exports.all.push(mod);
 });
+
+(function (m) {
+    m.Foo.belongsTo(m.Bar);
+})(exports);

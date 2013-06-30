@@ -5,25 +5,22 @@ module.exports = function(grunt) {
         var data = this.data,
             models = data.models,
             done = this.async(),
-            options = data.options  || {};
+            options = data.options  || {},
+            loader;
         if(typeof models == 'string') models = require(models);
         else if(models.call) models = models();
-        if(Array.isArray(data.files)){
-            var ff = files.slice(0);
-            function proc(){
-                if(!ff.length) done();
-                else {
-                    sf.load(ff.shift(), options, function(err){
-                        if(err) throw err;
-                        else proc();
-                    });
-                }
-            }
+
+        var callback = function () {
+            console.log(loader.saved+' fixtures loaded.');
+            done();
+        };
+
+        if(Array.isArray(data.from)){
+            loader = sf.loadFiles(data.from, models, options, callback);
+        } else if (data.from) {
+            loader = sf.loadFile(data.from, models, options, callback);
         } else {
-            sf.load(data.files, models, options, function (err) {
-                if(err) throw err;
-                else done();
-            });
+            throw new error('missing "from" argument');
         }
     });
 };

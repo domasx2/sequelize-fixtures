@@ -7,15 +7,15 @@ Yaml and json formats are supported. Includes a grunt task.
 
 findOrCreate is used to create records, so no record duplication when identical fixtures are defined or loaded multiple times.
 
-# Install
+### Install
     
     npm install sequelize-fixtures
 
-# Test
+### Test
     
     npm test
 
-# Usage
+### Usage
 
 ```javascript
     var sequelize_fixtures = require('sequelize-fixtures'),
@@ -24,12 +24,22 @@ findOrCreate is used to create records, so no record duplication when identical 
         };
 
     //from file
-    sequelize_fixtures.load('fixtures/test_data.json', models, function(err){
+    sequelize_fixtures.loadFile('fixtures/test_data.json', models, function(){
         doStuffAfterLoad();
     });
 
-    //can use glob syntax to load multiple files
-    sequelize_fixtures.load('fixtures/*.json', models, function(err){
+    //can use glob syntax to select multiple files
+    sequelize_fixtures.loadFile('fixtures/*.json', models, function(){
+        doStuffAfterLoad();
+    });
+
+    //array of files
+    sequelize_fixtures.loadFiles(['fixtures/users.json', 'fixtures/data*.json'], models, function(){
+        doStuffAfterLoad();
+    };
+
+    //specify file encoding (default utf8)
+    sequelize_fixtures.loadFile('fixtures/*.json', models, { encoding: 'windows-1257'}, function(){
         doStuffAfterLoad();
     });
 
@@ -50,14 +60,14 @@ findOrCreate is used to create records, so no record duplication when identical 
             }
         }
     ]
-    sequelize_fixtures.load(fixtures, models, function(err){
+    sequelize_fixtures.loadFixtures(fixtures, models, function(err){
         doStuffAfterLoad();
     });
 ```
 
-# File formats
+### File formats
 
-## json
+#### json
 
 ```json
     [
@@ -78,7 +88,7 @@ findOrCreate is used to create records, so no record duplication when identical 
     ]
 ```
 
-## yaml
+#### yaml
 
 ```yaml
     fixtures:
@@ -90,6 +100,35 @@ findOrCreate is used to create records, so no record duplication when identical 
           data:
             propA: baz
             propB: 3
+```
+
+### Natural Keys  
+
+To not have to specify id  field when describing associated records, you can use 'natural keys'. Or in the context of sequelize, essentially a 'where' clause to be used to retrieve the association via AssociatedModel.find :)  
+Only BelongsTo is supported for the moment.
+
+Assuming `Bar.belongsTo(Foo)`:
+```json
+[
+    {
+        model: 'Foo',
+        data: {
+            uniqueProp: 'FOO1',
+            uniqueProp2: 1,
+            propA: 'baz'
+        }
+    },
+    {
+        model: 'Bar',
+        data: {
+            propA: 'something',
+            foos: {
+                uniqueProp: 'FOO1', 
+                uniqueProp2: 1
+            }
+        }
+    }
+]
 ```
 
 # grunt task
@@ -104,13 +143,16 @@ Gruntfile.js:
                 models: require('../models')  //object Model name: model
             },
             test_data2: {
-                files: 'fixtures/data*.json', //glob path
+                file: 'fixtures/data*.json', //one file
                 models: '../models' //string will be require()'d when task is run
             },
             test_data3: {
-                files: 'fixtures/*',
+                file: 'fixtures/*',
                 models: function () {  //function will be evaluated for models object
                     return require('./models');
+                },
+                options: { //specify encoding
+                    encoding: 'windows-1257'
                 }
             }
         }
@@ -121,5 +163,4 @@ Gruntfile.js:
 ```
 # TODO
 
-Dump data into fixtures  
-Natural keys for associations  
+Utility for dumpiong data into fixtures
