@@ -111,20 +111,20 @@ Assuming `Bar.belongsTo(Foo)`:
 ```json
 [
     {
-        model: 'Foo',
-        data: {
-            uniqueProp: 'FOO1',
-            uniqueProp2: 1,
-            propA: 'baz'
+        "model": "Foo",
+        "data": {
+            "uniqueProp": "FOO1",
+            "uniqueProp2": 1,
+            "propA": "baz"
         }
     },
     {
-        model: 'Bar',
-        data: {
-            propA: 'something',
-            foos: {
-                uniqueProp: 'FOO1', 
-                uniqueProp2: 1
+        "model": "Bar",
+        "data": {
+            "propA": "something",
+            "foos": {
+                "uniqueProp": "FOO1", 
+                "uniqueProp2": 1
             }
         }
     }
