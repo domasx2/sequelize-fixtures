@@ -131,6 +131,35 @@ Assuming `Bar.belongsTo(Foo)`:
 ]
 ```
 
+### Specified keys
+
+Sometimes you want to be quite specific about how things get loaded ID wise because you may have some complex associations that you need to deal with after the basic fixture load. In this instance you can use the IDs to associate simple fixtures to others.
+
+Assuming `Bar.belongsTo(Foo, {as: 'linking_id'})`
+
+```json
+[
+    {
+        "model": "Foo",
+        "data": {
+            "uniqueProp": "FOO1",
+            "uniqueProp2": 1,
+            "propA": "baz",
+            "id": 1 // note the setting of the ID here
+        }
+    },
+    {
+        "model": "Bar",
+        "data": {
+            "propA": "something",
+            "linking_id": 1 // will associate to Foo whose id is 1
+        }
+    }
+]
+
+```
+
+
 # grunt task
 
 Gruntfile.js:
