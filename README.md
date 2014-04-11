@@ -122,7 +122,7 @@ Assuming `Bar.belongsTo(Foo)`:
         "model": "Bar",
         "data": {
             "propA": "something",
-            "foos": {
+            "foo": {
                 "uniqueProp": "FOO1", 
                 "uniqueProp2": 1
             }
@@ -161,6 +161,3 @@ Gruntfile.js:
 
     grunt.loadNpmTasks('sequelize-fixtures');
 ```
-# TODO
-
-Utility for dumpiong data into fixtures
