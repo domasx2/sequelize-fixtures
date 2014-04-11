@@ -138,20 +138,12 @@ Gruntfile.js:
 ```javascript
     grunt.initConfig({
         fixtures: {
-            test_data: {
-                files: ['fixtures/data1.json', 'fixtures/data2.json'], //list of files
-                models: require('../models')  //object Model name: model
-            },
-            test_data2: {
-                file: 'fixtures/data*.json', //one file
-                models: '../models' //string will be require()'d when task is run
-            },
-            test_data3: {
-                file: 'fixtures/*',
-                models: function () {  //function will be evaluated for models object
-                    return require('./models');
+            import_test_data: {
+                src: ['fixtures/data1.json', 'fixtures/models*.json'],
+                models: function () {  //returns mapping model name: model
+                    return require('../models') 
                 },
-                options: { //specify encoding
+                options: { //specify encoding, optiona. default utf-8
                     encoding: 'windows-1257'
                 }
             }

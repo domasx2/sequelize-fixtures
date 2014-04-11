@@ -15,12 +15,14 @@ module.exports = function(grunt) {
             done();
         };
 
-        if(Array.isArray(data.from)){
-            loader = sf.loadFiles(data.from, models, options, callback);
-        } else if (data.from) {
-            loader = sf.loadFile(data.from, models, options, callback);
+        var sources = [];
+        this.files.forEach(function(f){
+            [].push.apply(sources, f.src);
+        });
+        if(sources.length){
+            loader = sf.loadFiles(sources, models, options, callback);
         } else {
-            throw new error('missing "from" argument');
+            throw new Error('no sources provided');
         }
     });
 };
