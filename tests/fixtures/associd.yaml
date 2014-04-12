@@ -1,0 +1,12 @@
+fixtures:
+    - model: Bar
+      data:
+        id: 202
+        propA: bb
+        propB: 1
+    - model: Foo
+      data:
+        id: 303
+        propA: zz
+        propB: 2
+        bar: 202

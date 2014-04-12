@@ -1,0 +1,22 @@
+fixtures:
+    - 
+        model: Person
+        data:
+            id: 1001
+            name: Prim
+            role: Developer
+    - 
+        model: Person
+        data:
+            id: 1000
+            name: Selena
+            role: Analyst
+    - 
+        model: Project
+        data:
+            id: 1001
+            name: Stoopid Project
+            peopleprojects:
+                - 1001
+                - 1000
+

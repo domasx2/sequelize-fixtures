@@ -1,0 +1,26 @@
+fixtures:
+    - 
+        model: Person
+        data:
+            name: John
+            role: Developer
+    - 
+        model: Person
+        data:
+            name: Jack
+            role: Analyst
+    - 
+        model: Project
+        data:
+            name: Great Project
+            peopleprojects:
+                - 
+                    name: John
+                -   
+                    name: Jack
+    -
+        model: Project
+        data:
+            name: Bad Project
+            peopleprojects: []
+

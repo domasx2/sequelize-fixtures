@@ -102,34 +102,137 @@ findOrCreate is used to create records, so no record duplication when identical 
             propB: 3
 ```
 
-### Natural Keys  
 
-To not have to specify id  field when describing associated records, you can use 'natural keys'. Or in the context of sequelize, essentially a 'where' clause to be used to retrieve the association via AssociatedModel.find :)  
-Only BelongsTo is supported for the moment.
+### Associations 
 
-Assuming `Bar.belongsTo(Foo)`:
+You can specify associations by providing related object id or a where clause to select associated object with. Make sure associated objects are described before associations!
+
+#### belongsTo
+
+Assuming `Car.belongsTo(Owner)`:
+
+
 ```json
 [
     {
-        "model": "Foo",
+        "model": "Owner",
         "data": {
-            "uniqueProp": "FOO1",
-            "uniqueProp2": 1,
-            "propA": "baz"
+            "id": 11,
+            "name": "John Doe",
+            "city": "Vilnius"
         }
     },
     {
-        "model": "Bar",
+        "model": "Car",
         "data": {
-            "propA": "something",
-            "foo": {
-                "uniqueProp": "FOO1", 
-                "uniqueProp2": 1
+            "id": 203,
+            "make": "Ford",
+            "owner": 11
+        }
+    }
+]
+```
+
+OR 
+
+```json
+[
+    {
+        "model": "Owner",
+        "data": {
+            "name": "John Doe",
+            "city": "Vilnius"
+        }
+    },
+    {
+        "model": "Car",
+        "data": {
+            "make": "Ford",
+            "owner": { //make sure it's unique across all owners
+                "name": "John Doe" 
             }
         }
     }
 ]
 ```
+
+#### hasMany
+
+Assuming 
+
+```javascript
+Project.hasMany(m.Person);
+Person.hasMany(m.Project);
+```
+
+```json
+[
+    {
+        "model":"Person",
+        "data":{
+            "id":122,
+            "name": "Jack",
+            "role": "Developer"
+        }F
+    },
+    {
+        "model":"Person",
+        "data":{
+            "id": 123,
+            "name": "John",
+            "role": "Analyst"
+        }
+    },
+    {
+        "model":"Project",
+        "data": {
+            "id": 20,
+            "name": "The Great Project",
+            "peopleprojects": [122, 123]
+        }
+    }
+
+]
+```
+
+OR
+
+
+```json
+[
+    {
+        "model":"Person",
+        "data":{
+            "name": "Jack",
+            "role": "Developer"
+        }
+    },
+    {
+        "model":"Person",
+        "data":{
+            "name": "John",
+            "role": "Analyst"
+        }
+    },
+    {
+        "model":"Project",
+        "data": {
+            "name": "The Great Project",
+            "peopleprojects": [
+                {                        
+                    "name": "Jack"
+                },
+                {
+                    "name": "John"
+                }
+            ]
+        }
+    }
+
+]
+```
+
+
 
 # grunt task
 

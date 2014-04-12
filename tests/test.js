@@ -147,4 +147,87 @@ describe('fixtures', function(){
             });
         });
     });
+
+    it('should load assosication with. ids', function(done){
+        sf.loadFile('tests/fixtures/associd.yaml', models, function(){
+            models.Foo.findAll().success(function(foos){
+                foos.length.should.equal(1);
+                foos[0].id.should.equal(303);
+                foos[0].getBar().success(function(bar){
+                    bar.id.should.equal(202);
+                    bar.propA.should.equal('bb');
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load many2many assocs by nat keys', function(done) {
+        sf.loadFile('tests/fixtures/many2manynatural.yaml', models, function() {
+            models.Project.find({
+                where: {
+                    name: 'Great Project'
+                }
+            }).success(function(project){
+                project.getPeople().success(function(persons){
+                    persons.length.should.equal(2);
+                    var foundfirst = false;
+                    var foundsecond = false;
+                    persons.forEach(function(dude){
+                        if(dude.name === 'John') {
+                            foundfirst = true
+                        }
+                        if(dude.name === 'Jack') {
+                            foundsecond = true;
+                        }
+                    });
+                    foundfirst.should.equal(true);
+                    foundsecond.should.equal(true);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('empty many2many should not break', function(done) {
+        sf.loadFile('tests/fixtures/many2manynatural.yaml', models, function() {
+            models.Project.find({
+                where: {
+                    name: 'Bad Project'
+                }
+            }).success(function(project){
+                project.getPeople().success(function(persons){
+                    persons.length.should.equal(0);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load many2many assocs by ids', function(done) {
+        sf.loadFile('tests/fixtures/many2manyid.yaml', models, function() {
+            models.Project.find({
+                where: {
+                    name: 'Stoopid Project'
+                }
+            }).success(function(project){
+                project.getPeople().success(function(persons){
+                    persons.length.should.equal(2);
+                    var foundfirst = false;
+                    var foundsecond = false;
+                    persons.forEach(function(dude){
+                        if(dude.name === 'Prim') {
+                            foundfirst = true
+                        }
+                        if(dude.name === 'Selena') {
+                            foundsecond = true;
+                        }
+                    });
+                    foundfirst.should.equal(true);
+                    foundsecond.should.equal(true);
+                    done();
+                });
+            });
+        });
+    });
 });
