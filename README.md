@@ -173,7 +173,7 @@ Person.hasMany(m.Project);
             "id":122,
             "name": "Jack",
             "role": "Developer"
-        }F
+        }
     },
     {
         "model":"Person",
