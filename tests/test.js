@@ -54,6 +54,47 @@ describe('fixtures', function(){
         });
     });
 
+    it('sould accept buildOptions in fixture', function(done){
+        sf.loadFixture({
+            model: 'Article',
+            buildOptions: { raw: true, isNewRecord: true },
+            data: {
+                title: 'Any title',
+                slug: 'My Invalid Slug'
+            }
+        }, models, function (err) {
+            models.Article.find({
+                where: {
+                    title: 'Any title'
+                }
+            }).success(function (data) {
+                data.slug.should.equal('My Invalid Slug');
+                done();
+            });
+        });
+    });
+
+    it('sould accept saveOptions in fixture', function(done){
+        sf.loadFixture({
+            model: 'Article',
+            saveOptions: { fields: ['title', 'body'] },
+            data: {
+                title: 'Any title',
+                slug: 'my-slug',
+                body: 'My nice article'
+            }
+        }, models, function (err) {
+            models.Article.find({
+                where: {
+                    title: 'Any title'
+                }
+            }).success(function (data) {
+                (data.slug === null).should.equal(true);
+                done();
+            });
+        });
+    });
+
     it('should not duplicate fixtures', function (done){
         sf.loadFixture(FOO_FIXTURE, models, function (){
             sf.loadFixture(FOO_FIXTURE, models, function (){
@@ -175,7 +216,7 @@ describe('fixtures', function(){
                     var foundsecond = false;
                     persons.forEach(function(dude){
                         if(dude.name === 'John') {
-                            foundfirst = true
+                            foundfirst = true;
                         }
                         if(dude.name === 'Jack') {
                             foundsecond = true;
@@ -217,7 +258,7 @@ describe('fixtures', function(){
                     var foundsecond = false;
                     persons.forEach(function(dude){
                         if(dude.name === 'Prim') {
-                            foundfirst = true
+                            foundfirst = true;
                         }
                         if(dude.name === 'Selena') {
                             foundsecond = true;

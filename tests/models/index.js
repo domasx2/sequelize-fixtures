@@ -7,7 +7,7 @@ var Sequelize = require('sequelize-sqlite').sequelize,
 
 exports.sequelize = sequelize;
 exports.all = [];
-['Foo', 'Bar', 'Person', 'Project'].forEach( function (model) {
+['Foo', 'Bar', 'Article', 'Person', 'Project'].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
     exports.all.push(mod);
