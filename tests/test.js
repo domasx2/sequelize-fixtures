@@ -271,4 +271,45 @@ describe('fixtures', function(){
             });
         });
     });
+
+    it('should set many2many even if object already exists', function(done) {
+        sf.loadFile('tests/fixtures/many2manynatural.yaml', models, function() {
+            models.Project.find({
+                where: {
+                    name: 'Bad Project'
+                }
+            }).success(function(project){
+                project.getPeople().success(function(persons){
+                    persons.length.should.equal(0);
+                    sf.loadFixture({
+                        model: 'Project',
+                        data: {
+                            name: 'Bad Project',
+                            peopleprojects: [
+                                {
+                                    name: 'John'
+                                },
+                                {
+                                    name: 'Jack'
+                                }
+                            ]
+                        }
+                    }, models, function() {
+                        models.Project.findAll({
+                            where: {
+                                name: 'Bad Project'
+                            }
+                        }).success(function(projects){
+                            projects.length.should.equal(1);
+                            projects[0].getPeople().success(function(persons){
+                                persons.length.should.equal(2);
+                                done();
+                            });
+                        });
+
+                    });
+                });
+            });
+        });
+    });
 });

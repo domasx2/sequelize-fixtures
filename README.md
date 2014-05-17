@@ -232,6 +232,28 @@ OR
 ]
 ```
 
+# Build options, save optons
+
+For each model you can provide build options that are passed to Model.build() and save options that are passed to instance.save(), example:
+
+```json
+{
+    "model": "Article",
+    "buildOptions": { 
+        "raw": true, 
+        "isNewRecord": true
+    },
+    "saveOptions": { 
+        "fields": ["title", "body"] 
+    },
+    "data": {
+        "title": "Any title",
+        "slug": "My Invalid Slug"
+    }
+}
+
+```
+
 
 
 # grunt task
