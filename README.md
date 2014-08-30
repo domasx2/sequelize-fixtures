@@ -42,6 +42,17 @@ findOrCreate is used to create records, so no record duplication when identical 
     sequelize_fixtures.loadFile('fixtures/*.json', models, { encoding: 'windows-1257'}, function(){
         doStuffAfterLoad();
     });
+    
+    //apply transform for each model being loaded
+    sequelize_fixtures.loadFile('ixtures/*.json', models, {
+      transformFixtureDataFn: function (data) {
+          if(data.createdAt 
+           && data.createdAt < 0) { 
+            data.createdAt = new Date((new Date()).getTime() + parseFloat(data.createdAt) * 1000 * 60);
+          }
+          return data;
+        }
+    });
 
     //from array
     var fixtures = [
@@ -59,7 +70,7 @@ findOrCreate is used to create records, so no record duplication when identical 
                 propB: 3
             }
         }
-    ]
+    ];
     sequelize_fixtures.loadFixtures(fixtures, models, function(err){
         doStuffAfterLoad();
     });
