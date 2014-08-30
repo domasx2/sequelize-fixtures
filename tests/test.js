@@ -138,6 +138,42 @@ describe('fixtures', function(){
         });
     });
 
+    it('should load fixtures from js (implied relative)', function(done){
+        sf.loadFile('tests/fixtures/fixture1.js', models, function(){
+            models.Foo.count().success(function(c){
+                c.should.equal(2);
+                models.Bar.count().success(function(c){
+                    c.should.equal(1);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load fixtures from js (explicit relative)', function(done){
+        sf.loadFile('./tests/fixtures/fixture1.js', models, function(){
+            models.Foo.count().success(function(c){
+                c.should.equal(2);
+                models.Bar.count().success(function(c){
+                    c.should.equal(1);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load fixtures from js (absolute)', function(done){
+        sf.loadFile(process.cwd() + '/tests/fixtures/fixture1.js', models, function(){
+            models.Foo.count().success(function(c){
+                c.should.equal(2);
+                models.Bar.count().success(function(c){
+                    c.should.equal(1);
+                    done();
+                });
+            });
+        });
+    });
+
     it('should load fixtures from multiple files via glob', function(done){
         sf.loadFile('tests/fixtures/fixture*.json', models, function(){
             should.not.exist();
