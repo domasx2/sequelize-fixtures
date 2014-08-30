@@ -103,6 +103,28 @@ findOrCreate is used to create records, so no record duplication when identical 
 ```
 
 
+#### javascript
+
+```javascript
+    module.exports = [
+        {
+            "model": "Foo",
+            "data": {
+                "propA": "bar",
+                "propB": 1
+            }
+        },
+        {
+            "model": "Foo",
+            "data": {
+                "propA": "baz",
+                "propB": 3
+            }
+        }
+    ];
+```
+
+
 ### Associations 
 
 You can specify associations by providing related object id or a where clause to select associated object with. Make sure associated objects are described before associations!
