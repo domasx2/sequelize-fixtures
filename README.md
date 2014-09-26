@@ -44,7 +44,7 @@ findOrCreate is used to create records, so no record duplication when identical 
     });
     
     //apply transform for each model being loaded
-    sequelize_fixtures.loadFile('ixtures/*.json', models, {
+    sequelize_fixtures.loadFile('fixtures/*.json', models, {
       transformFixtureDataFn: function (data) {
           if(data.createdAt 
            && data.createdAt < 0) { 
