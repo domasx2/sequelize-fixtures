@@ -3,8 +3,8 @@ var sf = require('../index'),
     models = require('./models');
 
 beforeEach(function(done){
-    models.sequelize.drop().success(function(){
-        models.sequelize.sync().success(function(){
+    models.sequelize.drop().then(function(){
+        models.sequelize.sync().then(function(){
             done();
         });
     });
@@ -26,7 +26,7 @@ describe('fixtures', function(){
                     propA: 'bar',
                     propB: 1
                 }
-            }).success(function(foo){
+            }).then(function(foo){
                 should.exist(foo);
                 foo.propA.should.equal('bar');
                 foo.propB.should.equal(1);
@@ -45,7 +45,7 @@ describe('fixtures', function(){
             }
         }, models, function (err){
             should.not.exist(err);
-            models.Foo.find(3).success(function(foo){
+            models.Foo.find(3).then(function(foo){
                 should.exist(foo);
                 foo.propA.should.equal('bar');
                 foo.propB.should.equal(1);
@@ -67,7 +67,7 @@ describe('fixtures', function(){
                 where: {
                     title: 'Any title'
                 }
-            }).success(function (data) {
+            }).then(function (data) {
                 data.slug.should.equal('My Invalid Slug');
                 done();
             });
@@ -88,7 +88,7 @@ describe('fixtures', function(){
                 where: {
                     title: 'Any title'
                 }
-            }).success(function (data) {
+            }).then(function (data) {
                 (data.slug === null).should.equal(true);
                 done();
             });
@@ -102,7 +102,7 @@ describe('fixtures', function(){
                     where: {
                         propA: 'bar'
                     }
-                }).success(function(c){
+                }).then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -119,7 +119,7 @@ describe('fixtures', function(){
             }
         }], models, function (err){
             should.not.exist(err);
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(2);
                 done();
             });
@@ -128,9 +128,9 @@ describe('fixtures', function(){
 
     it('should load fixtures from json', function(done){
         sf.loadFile('tests/fixtures/fixture1.json', models, function(){
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(2);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -140,9 +140,9 @@ describe('fixtures', function(){
 
     it('should load fixtures from js (implied relative)', function(done){
         sf.loadFile('tests/fixtures/fixture1.js', models, function(){
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(2);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -152,9 +152,9 @@ describe('fixtures', function(){
 
     it('should load fixtures from js (explicit relative)', function(done){
         sf.loadFile('./tests/fixtures/fixture1.js', models, function(){
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(2);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -164,9 +164,9 @@ describe('fixtures', function(){
 
     it('should load fixtures from js (absolute)', function(done){
         sf.loadFile(process.cwd() + '/tests/fixtures/fixture1.js', models, function(){
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(2);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -177,9 +177,9 @@ describe('fixtures', function(){
     it('should load fixtures from multiple files via glob', function(done){
         sf.loadFile('tests/fixtures/fixture*.json', models, function(){
             should.not.exist();
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(3);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -190,9 +190,9 @@ describe('fixtures', function(){
     it('should load fixtures from multiple files', function(done){
         sf.loadFiles(['tests/fixtures/fixture1.json', 'tests/fixtures/fixture2.json'], models, function(){
             should.not.exist();
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(3);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -202,9 +202,9 @@ describe('fixtures', function(){
 
     it('should load yaml fixtures', function(done){
         sf.loadFile('tests/fixtures/fixture3.yaml', models, function(){
-            models.Foo.count().success(function(c){
+            models.Foo.count().then(function(c){
                 c.should.equal(1);
-                models.Bar.count().success(function(c){
+                models.Bar.count().then(function(c){
                     c.should.equal(1);
                     done();
                 });
@@ -214,9 +214,9 @@ describe('fixtures', function(){
 
     it('should load assosication with. natural keys', function(done){
         sf.loadFile('tests/fixtures/natkeys.yaml', models, function(){
-            models.Foo.findAll().success(function(foos){
+            models.Foo.findAll().then(function(foos){
                 foos.length.should.equal(1);
-                foos[0].getBar().success(function(bar){
+                foos[0].getBar().then(function(bar){
                     bar.propA.should.equal('baz');
                     bar.propB.should.equal(1);
                     done();
@@ -227,10 +227,10 @@ describe('fixtures', function(){
 
     it('should load assosication with. ids', function(done){
         sf.loadFile('tests/fixtures/associd.yaml', models, function(){
-            models.Foo.findAll().success(function(foos){
+            models.Foo.findAll().then(function(foos){
                 foos.length.should.equal(1);
                 foos[0].id.should.equal(303);
-                foos[0].getBar().success(function(bar){
+                foos[0].getBar().then(function(bar){
                     bar.id.should.equal(202);
                     bar.propA.should.equal('bb');
                     done();
@@ -245,8 +245,8 @@ describe('fixtures', function(){
                 where: {
                     name: 'Great Project'
                 }
-            }).success(function(project){
-                project.getPeople().success(function(persons){
+            }).then(function(project){
+                project.getPeople().then(function(persons){
                     persons.length.should.equal(2);
                     var foundfirst = false;
                     var foundsecond = false;
@@ -272,8 +272,8 @@ describe('fixtures', function(){
                 where: {
                     name: 'Bad Project'
                 }
-            }).success(function(project){
-                project.getPeople().success(function(persons){
+            }).then(function(project){
+                project.getPeople().then(function(persons){
                     persons.length.should.equal(0);
                     done();
                 });
@@ -287,8 +287,8 @@ describe('fixtures', function(){
                 where: {
                     name: 'Stoopid Project'
                 }
-            }).success(function(project){
-                project.getPeople().success(function(persons){
+            }).then(function(project){
+                project.getPeople().then(function(persons){
                     persons.length.should.equal(2);
                     var foundfirst = false;
                     var foundsecond = false;
@@ -314,8 +314,8 @@ describe('fixtures', function(){
                 where: {
                     name: 'Bad Project'
                 }
-            }).success(function(project){
-                project.getPeople().success(function(persons){
+            }).then(function(project){
+                project.getPeople().then(function(persons){
                     persons.length.should.equal(0);
                     sf.loadFixture({
                         model: 'Project',
@@ -335,9 +335,9 @@ describe('fixtures', function(){
                             where: {
                                 name: 'Bad Project'
                             }
-                        }).success(function(projects){
+                        }).then(function(projects){
                             projects.length.should.equal(1);
-                            projects[0].getPeople().success(function(persons){
+                            projects[0].getPeople().then(function(persons){
                                 persons.length.should.equal(2);
                                 done();
                             });
