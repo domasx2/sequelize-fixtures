@@ -3,7 +3,8 @@
         "model":"Foo",
         "data": {
             "propA": "tralivali2",
-            "propB": 2
+            "propB": 2,
+            "status": false
         }
     }
 ]
