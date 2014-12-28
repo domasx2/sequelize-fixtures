@@ -2,11 +2,9 @@ var sf = require('../index'),
     should = require('should'),
     models = require('./models');
 
-beforeEach(function(done){
-    models.sequelize.drop().then(function(){
-        models.sequelize.sync().then(function(){
-            done();
-        });
+beforeEach(function() {
+    return models.sequelize.drop().then(function(){
+        models.sequelize.sync();
     });
 });
 
@@ -18,7 +16,7 @@ var FOO_FIXTURE = {
     }
 };
 
-describe('fixtures', function(){
+describe('fixtures (with callbacks)', function(){
     it('should load fixture without id', function(done){
         sf.loadFixture(FOO_FIXTURE, models, function (){
             models.Foo.find({
@@ -54,7 +52,7 @@ describe('fixtures', function(){
         });
     });
 
-    it('sould accept buildOptions in fixture', function(done){
+    it('should accept buildOptions in fixture', function(done){
         sf.loadFixture({
             model: 'Article',
             buildOptions: { raw: true, isNewRecord: true },
@@ -74,7 +72,7 @@ describe('fixtures', function(){
         });
     });
 
-    it('sould accept saveOptions in fixture', function(done){
+    it('should accept saveOptions in fixture', function(done){
         sf.loadFixture({
             model: 'Article',
             saveOptions: { fields: ['title', 'body'] },

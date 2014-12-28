@@ -1,5 +1,5 @@
-var Loader  = require('./lib/loader'),
-    Reader  = require('./lib/reader');
+var Loader = require('./lib/loader'),
+    Reader = require('./lib/reader');
 
 function initopts(options){
     options = options || {};
