@@ -1,10 +1,10 @@
 {
   "name": "sequelize-fixtures",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha tests/test.js"
+    "test": "./node_modules/.bin/mocha tests"
   },
   "engines": {
     "node": "*"
@@ -14,9 +14,9 @@
     "fixtures"
   ],
   "dependencies": {
-    "js-yaml": "~2.1.0",
+    "bluebird": "^2.4.2",
     "glob": "~3.2.1",
-    "q": "~0.9.6"
+    "js-yaml": "~2.1.0"
   },
   "devDependencies": {
     "sequelize-sqlite": "*",

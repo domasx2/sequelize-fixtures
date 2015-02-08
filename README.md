@@ -4,8 +4,8 @@ Sequelize fixtures
 This is a simple lib to load data to database using sequelize.  
 It is intended for easily setting up test data.  
 Yaml and json formats are supported. Includes a grunt task.  
-
-findOrCreate is used to create records, so no record duplication when identical fixtures are defined or loaded multiple times.
+Duplicate records are not insertd.
+API returns bluebird promises, but callbacks can also be used as the last argument.
 
 ### Install
     
@@ -24,34 +24,36 @@ findOrCreate is used to create records, so no record duplication when identical 
         };
 
     //from file
-    sequelize_fixtures.loadFile('fixtures/test_data.json', models, function(){
+    sequelize_fixtures.loadFile('fixtures/test_data.json', models).then(function(){
         doStuffAfterLoad();
     });
 
     //can use glob syntax to select multiple files
-    sequelize_fixtures.loadFile('fixtures/*.json', models, function(){
+    sequelize_fixtures.loadFile('fixtures/*.json', models).then(function(){
         doStuffAfterLoad();
     });
 
     //array of files
-    sequelize_fixtures.loadFiles(['fixtures/users.json', 'fixtures/data*.json'], models, function(){
+    sequelize_fixtures.loadFiles(['fixtures/users.json', 'fixtures/data*.json'], models).then(function(){
         doStuffAfterLoad();
-    };
+    });
 
     //specify file encoding (default utf8)
-    sequelize_fixtures.loadFile('fixtures/*.json', models, { encoding: 'windows-1257'}, function(){
+    sequelize_fixtures.loadFile('fixtures/*.json', models, { encoding: 'windows-1257'}).then(function(){
         doStuffAfterLoad();
     });
     
     //apply transform for each model being loaded
     sequelize_fixtures.loadFile('fixtures/*.json', models, {
-      transformFixtureDataFn: function (data) {
+        transformFixtureDataFn: function (data) {
           if(data.createdAt 
            && data.createdAt < 0) { 
             data.createdAt = new Date((new Date()).getTime() + parseFloat(data.createdAt) * 1000 * 60);
           }
           return data;
         }
+    }).then(function() {
+        doStuffAfterLoad();
     });
 
     //from array
@@ -71,7 +73,7 @@ findOrCreate is used to create records, so no record duplication when identical 
             }
         }
     ];
-    sequelize_fixtures.loadFixtures(fixtures, models, function(err){
+    sequelize_fixtures.loadFixtures(fixtures, models).then(function(){
         doStuffAfterLoad();
     });
 ```
