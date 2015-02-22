@@ -191,13 +191,20 @@ OR
 ]
 ```
 
-#### hasMany
+#### hasMany, belongsToMany
 
 Assuming 
 
 ```javascript
-Project.hasMany(m.Person);
-Person.hasMany(m.Project);
+Project.hasMany(Person);
+Person.hasMany(Project);
+```
+
+or
+
+```javascript
+Project.belongsToMany(Person);
+Person.belongsToMany(Project);
 ```
 
 ```json

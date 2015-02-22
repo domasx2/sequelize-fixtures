@@ -9,4 +9,4 @@ fixtures:
         id: 303
         propA: zz
         propB: 2
-        bars: 202
+        bar: 202

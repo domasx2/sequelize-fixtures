@@ -1,6 +1,6 @@
 {
   "name": "sequelize-fixtures",
-  "version": "0.4",
+  "version": "0.4.0",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,8 @@
     "js-yaml": "~2.1.0"
   },
   "devDependencies": {
-    "sequelize-sqlite": "*",
+    "sequelize": "*",
+    "sqlite3": "*",
     "mocha": "*",
     "should": "*"
   },

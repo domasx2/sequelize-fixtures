@@ -23,4 +23,24 @@ fixtures:
         data:
             name: Bad Project
             peopleprojects: []
+    -
+        model: Actor
+        data:
+            id: 1001
+            name: Johnny
+    -
+        model: Actor
+        data:
+            id: 1002
+            name: Jack
+    -
+        model: Movie
+        data:
+            id: 1001
+            name: Matrix 4
+            actorsmovies:
+                - 
+                    name: Johnny
+                -
+                    name: Jack
 

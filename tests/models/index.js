@@ -1,4 +1,4 @@
-var Sequelize = require('sequelize-sqlite').sequelize,
+var Sequelize = require('sequelize'),
     sequelize = new Sequelize('database', 'username', 'password', {
         dialect: 'sqlite',
         storage: 'testdb.sqlite',
@@ -7,7 +7,7 @@ var Sequelize = require('sequelize-sqlite').sequelize,
 
 exports.sequelize = sequelize;
 exports.all = [];
-['Foo', 'Bar', 'Article', 'Person', 'Project'].forEach( function (model) {
+['Foo', 'Bar', 'Article', 'Person', 'Project', 'Actor', 'Movie'].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
     exports.all.push(mod);
@@ -17,4 +17,6 @@ exports.all = [];
     m.Foo.belongsTo(m.Bar);
     m.Project.hasMany(m.Person);
     m.Person.hasMany(m.Project);
+    m.Actor.belongsToMany(m.Movie);
+    m.Movie.belongsToMany(m.Actor);
 })(exports);

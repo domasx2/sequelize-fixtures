@@ -257,6 +257,60 @@ describe('fixture (with promises)', function() {
             });
     });
 
+    it('should load belongs 2 many assocs by nat keys', function(done) {
+        sf.loadFile('tests/fixtures/many2manynatural.yaml', models).then(function() {
+            models.Movie.find({
+                where: {
+                    name: 'Matrix 4'
+                }
+            }).then(function(movie){
+                movie.getActors().then(function(actors){
+                    actors.length.should.equal(2);
+                    var foundfirst = false;
+                    var foundsecond = false;
+                    actors.forEach(function(dude){
+                        if(dude.name === 'Johnny') {
+                            foundfirst = true;
+                        }
+                        if(dude.name === 'Jack') {
+                            foundsecond = true;
+                        }
+                    });
+                    foundfirst.should.equal(true);
+                    foundsecond.should.equal(true);
+                    done();
+                });
+            });
+        });
+    });
+
+    it('should load belongs 2 many assocs by ids', function(done) {
+        sf.loadFile('tests/fixtures/many2manyid.yaml', models).then(function() {
+            models.Movie.find({
+                where: {
+                    name: 'Matrix 4'
+                }
+            }).then(function(movie){
+                movie.getActors().then(function(actors){
+                    actors.length.should.equal(2);
+                    var foundfirst = false;
+                    var foundsecond = false;
+                    actors.forEach(function(dude){
+                        if(dude.name === 'Johnny') {
+                            foundfirst = true;
+                        }
+                        if(dude.name === 'Jack') {
+                            foundsecond = true;
+                        }
+                    });
+                    foundfirst.should.equal(true);
+                    foundsecond.should.equal(true);
+                    done();
+                });
+            });
+        });
+    });
+
     it('empty many2many should not break', function() {
         return sf.loadFile('tests/fixtures/many2manynatural.yaml', models)
             .then(function() {

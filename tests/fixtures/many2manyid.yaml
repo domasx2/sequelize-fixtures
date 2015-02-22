@@ -20,3 +20,21 @@ fixtures:
                 - 1001
                 - 1000
 
+    -
+        model: Actor
+        data:
+            id: 1001
+            name: Johnny
+    -
+        model: Actor
+        data:
+            id: 1002
+            name: Jack
+    -
+        model: Movie
+        data:
+            id: 1001
+            name: Matrix 4
+            actorsmovies:
+                - 1001
+                - 1002
