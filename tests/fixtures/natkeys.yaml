@@ -11,6 +11,6 @@ fixtures:
       data:
         propA: one
         propB: 2
-        bar:
+        bars:
             propA: baz
             propB: 1
