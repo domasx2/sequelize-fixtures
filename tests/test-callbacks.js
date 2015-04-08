@@ -124,6 +124,27 @@ describe('fixtures (with callbacks)', function(){
         });
     });
 
+    it('should not load duplicate fixtures whose keys already exist', function(done) {
+        sf.loadFixtures([FOO_FIXTURE, {
+            model: 'Foo',
+            keys: ['propA'],
+            data: {
+                propA: 'baz',
+                propB: 2
+            }
+        }], models, function (err){
+            should.not.exist(err);
+            models.Foo.count({
+                where: {
+                    propA: 'bar'
+                }
+            }).then(function(c){
+                c.should.equal(1);
+                done();
+            });
+        });
+    });
+
     it('should load fixtures from json', function(done){
         sf.loadFile('tests/fixtures/fixture1.json', models, function(){
             models.Foo.count().then(function(c){

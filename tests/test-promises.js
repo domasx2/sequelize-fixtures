@@ -118,6 +118,25 @@ describe('fixture (with promises)', function() {
         });
     });
 
+    it('should not duplicate fixtures whose keys already exist', function() {
+        return sf.loadFixtures([FOO_FIXTURE, {
+            model: 'Foo',
+            keys: ['propA'],
+            data: {
+                propA: 'bar',
+                propB: 2
+            }
+        }], models).then(function() {
+            return models.Foo.count({
+                where: {
+                    propA: 'bar'
+                }
+            });
+        }).then(function(c){
+            c.should.equal(1);
+        });
+    });
+
     it('should load fixtures from json', function() {
         return sf.loadFile('tests/fixtures/fixture1.json', models)
             .then(function() {
