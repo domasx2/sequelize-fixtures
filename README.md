@@ -274,7 +274,7 @@ OR
 ]
 ```
 
-# Build options, save optons
+#### Build options, save optons
 
 For each model you can provide build options that are passed to Model.build() and save options that are passed to instance.save(), example:
 
@@ -296,6 +296,30 @@ For each model you can provide build options that are passed to Model.build() an
 
 ```
 
+#### Detect duplicates based on select fields
+
+In case you want to detect duplicates based on specific field or fields rather than all fields (for example, don't include entities with the same id, even if other fields don't match), you can speficy these fields with a 'keys' property.
+
+```json
+{
+    "model": "Person",
+    "keys": ["email"],
+    "data": {
+        "name": "John",
+        "email": "example@example.com"
+    }
+},
+{
+    "model": "Person",
+    "keys": ["email"],
+    "data": {
+        "name": "Patrick",
+        "email": "example@example.com"
+    }
+}
+
+```
+In this example only John will be loaded
 
 
 # grunt task
