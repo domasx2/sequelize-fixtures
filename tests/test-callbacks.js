@@ -43,7 +43,7 @@ describe('fixtures (with callbacks)', function(){
             }
         }, models, function (err){
             should.not.exist(err);
-            models.Foo.find(3).then(function(foo){
+            models.Foo.find({where: {id: 3}}).then(function(foo){
                 should.exist(foo);
                 foo.propA.should.equal('bar');
                 foo.propB.should.equal(1);

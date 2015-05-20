@@ -42,7 +42,7 @@ describe('fixture (with promises)', function() {
                 propB: 1
             }
         }, models).then(function() {
-            return models.Foo.find(3);
+            return models.Foo.find({where: {id: 3}});
         }).then(function(foo){
             should.exist(foo);
             foo.propA.should.equal('bar');

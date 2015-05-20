@@ -274,6 +274,42 @@ OR
 ]
 ```
 
+If using Sequelize 3.0.0 or later, you can define the associated resources by their name instead of the relation name, like this:
+
+```json
+[
+    {
+        "model":"Person",
+        "data":{
+            "name": "Jack",
+            "role": "Developer"
+        }
+    },
+    {
+        "model":"Person",
+        "data":{
+            "name": "John",
+            "role": "Analyst"
+        }
+    },
+    {
+        "model":"Project",
+        "data": {
+            "name": "The Great Project",
+            "people": [
+                {                        
+                    "name": "Jack"
+                },
+                {
+                    "name": "John"
+                }
+            ]
+        }
+    }
+
+]
+```
+
 #### Build options, save optons
 
 For each model you can provide build options that are passed to Model.build() and save options that are passed to instance.save(), example:
