@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/domasx2/sequelize-fixtures.svg?branch=master)](https://travis-ci.org/domasx2/sequelize-fixtures)
+
 Sequelize fixtures
 ==========================================
 
