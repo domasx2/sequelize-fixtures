@@ -1,10 +1,10 @@
 {
   "name": "sequelize-fixtures",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha tests"
+    "test": "rm -f ./testdb.sqlite && ./node_modules/.bin/mocha tests"
   },
   "engines": {
     "node": "*"
