@@ -13,7 +13,7 @@ fixtures:
         model: Project
         data:
             name: Great Project
-            peopleprojects:
+            people:
                 - 
                     name: John
                 -   
@@ -22,7 +22,7 @@ fixtures:
         model: Project
         data:
             name: Bad Project
-            peopleprojects: []
+            people: []
     -
         model: Actor
         data:
@@ -38,7 +38,7 @@ fixtures:
         data:
             id: 1001
             name: Matrix 4
-            actorsmovies:
+            actors:
                 - 
                     name: Johnny
                 -

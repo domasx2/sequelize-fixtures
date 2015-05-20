@@ -1,6 +1,6 @@
 {
   "name": "sequelize-fixtures",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {

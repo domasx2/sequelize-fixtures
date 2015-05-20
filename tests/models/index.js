@@ -15,11 +15,9 @@ exports.all = [];
 
 (function (m) {
     m.Foo.belongsTo(m.Bar);
-    // From Sequelize 3.0.0 changelog:
-    // "[REMOVED] N:M relationships can no longer be represented by 2 x hasMany" 
-    // Setting constraints to false to keep this working
-    m.Project.hasMany(m.Person, {constraints: false});
-    m.Person.hasMany(m.Project, {constraints: false});
+    m.Bar.hasMany(m.Foo);
+    m.Project.belongsToMany(m.Person, {through: 'peopleprojects'});
+    m.Person.belongsToMany(m.Project, {through: 'peopleprojects'});
     m.Actor.belongsToMany(m.Movie, {through: 'actorsmovies'});
     m.Movie.belongsToMany(m.Actor, {through: 'actorsmovies'});
 })(exports);

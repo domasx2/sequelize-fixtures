@@ -5,7 +5,9 @@ This is a simple lib to load data to database using sequelize.
 It is intended for easily setting up test data.  
 Yaml and json formats are supported. Includes a grunt task.  
 Duplicate records are not insertd.
-API returns bluebird promises, but callbacks can also be used as the last argument.
+API returns bluebird promises, but callbacks can also be used as the last argument.  
+
+Tested with latest Sequelize (3.0.0), should work on 2.x.
 
 ### Install
     
@@ -142,10 +144,14 @@ API returns bluebird promises, but callbacks can also be used as the last argume
 
 You can specify associations by providing related object id or a where clause to select associated object with. Make sure associated objects are described before associations!
 
-#### belongsTo
+#### One to many
 
-Assuming `Car.belongsTo(Owner)`:
-
+Assuming 
+```javascript
+Car.belongsTo(Owner);
+Owner.hasMany(Car);
+```
+Associated entity can be mapped by providing either an id:  
 
 ```json
 [
@@ -168,7 +174,7 @@ Assuming `Car.belongsTo(Owner)`:
 ]
 ```
 
-OR 
+Or a property-value map (like a 'where' object) to find the entity with:  
 
 ```json
 [
@@ -183,7 +189,7 @@ OR
         "model": "Car",
         "data": {
             "make": "Ford",
-            "owner": { //make sure it's unique across all owners
+            "owner": {
                 "name": "John Doe" 
             }
         }
@@ -191,21 +197,16 @@ OR
 ]
 ```
 
-#### hasMany, belongsToMany
+#### Many to many
 
 Assuming 
 
 ```javascript
-Project.hasMany(Person);
-Person.hasMany(Project);
+Project.belongsToMany(Person, {through: 'peopleprojects'});
+Person.belongsToMany(Project, {through: 'peopleprojects'});
 ```
 
-or
-
-```javascript
-Project.belongsToMany(Person);
-Person.belongsToMany(Project);
-```
+Associated entities can be mapped using the association 'as' name ('people' for Project and 'projects' for People) or 'through' table name, and providing an array of ids:
 
 ```json
 [
@@ -230,51 +231,15 @@ Person.belongsToMany(Project);
         "data": {
             "id": 20,
             "name": "The Great Project",
-            "peopleprojects": [122, 123]
+            "people": [122, 123]
         }
     }
 
 ]
 ```
 
-OR
+Or an array of property-value mappings to find the entities with:
 
-
-```json
-[
-    {
-        "model":"Person",
-        "data":{
-            "name": "Jack",
-            "role": "Developer"
-        }
-    },
-    {
-        "model":"Person",
-        "data":{
-            "name": "John",
-            "role": "Analyst"
-        }
-    },
-    {
-        "model":"Project",
-        "data": {
-            "name": "The Great Project",
-            "peopleprojects": [
-                {                        
-                    "name": "Jack"
-                },
-                {
-                    "name": "John"
-                }
-            ]
-        }
-    }
-
-]
-```
-
-If using Sequelize 3.0.0 or later, you can define the associated resources by their name instead of the relation name, like this:
 
 ```json
 [

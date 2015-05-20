@@ -16,7 +16,7 @@ fixtures:
         data:
             id: 1001
             name: Stoopid Project
-            peopleprojects:
+            people:
                 - 1001
                 - 1000
 
@@ -35,6 +35,6 @@ fixtures:
         data:
             id: 1001
             name: Matrix 4
-            actorsmovies:
+            actors:
                 - 1001
                 - 1002

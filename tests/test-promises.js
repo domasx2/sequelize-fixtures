@@ -388,7 +388,7 @@ describe('fixture (with promises)', function() {
                     model: 'Project',
                     data: {
                         name: 'Bad Project',
-                        peopleprojects: [
+                        people: [
                             {
                                 name: 'John'
                             },

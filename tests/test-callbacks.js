@@ -394,7 +394,7 @@ describe('fixtures (with callbacks)', function(){
                         model: 'Project',
                         data: {
                             name: 'Bad Project',
-                            peopleprojects: [
+                            people: [
                                 {
                                     name: 'John'
                                 },
