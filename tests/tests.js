@@ -411,4 +411,36 @@ describe('fixture (with promises)', function() {
                 persons.length.should.equal(2);
             });
     });
+
+    it('should handle primary keys not named "id" for has many', function() {
+        return sf.loadFile('tests/fixtures/custompk.yaml', models)
+            .then(function() {
+                return models.Movie.find({
+                    where: {
+                        name: 'Pirates of the Baltic Sea'
+                    }
+                });
+            }).then(function(movie){
+                return movie.getProducers();
+            }).then(function(producers){
+                producers.length.should.equal(1);
+                producers[0].name.should.equal('Somethingstein');
+            });
+    });
+
+    it('should handle primary keys not named "id" for belongs to', function() {
+        return sf.loadFile('tests/fixtures/custompk.yaml', models)
+            .then(function() {
+                return models.Play.find({
+                    where: {
+                        name: 'Book of Jesus'
+                    }
+                });
+            }).then(function(movie){
+                return movie.getProducers();
+            }).then(function(producers){
+                producers.length.should.equal(1);
+                producers[0].name.should.equal('Arnie');
+            });
+    });
 });

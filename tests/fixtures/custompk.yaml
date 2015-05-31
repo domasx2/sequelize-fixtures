@@ -1,0 +1,21 @@
+fixtures:
+    - model: Play
+      data:
+            play_id: book_jesus
+            name: Book of Jesus
+    - model: Producer
+      data:
+            producer_id: prod2
+            name: Arnie
+            play: book_jesus
+
+    - model: Producer
+      data:
+            producer_id: prod1
+            name: Somethingstein
+    - model: Movie
+      data:
+            id: 1006
+            name: Pirates of the Baltic Sea
+            producers:
+                - prod1
