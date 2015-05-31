@@ -3,24 +3,21 @@
         "model":"Foo",
         "data": {
             "propA": "tralivali",
-            "propB": 2,
-            "status": false
+            "propB": 2
         }
     },
     {
         "model":"Foo",
         "data": {
             "propA": "treerre",
-            "propB": 4,
-            "status": false
+            "propB": 4
         }
     },
     {
         "model":"Bar",
         "data": {
             "propA": "1234",
-            "propB": 43,
-            "status": false
+            "propB": 43
         }
     }
 ]
