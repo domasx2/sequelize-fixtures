@@ -46,6 +46,11 @@ Tested with latest Sequelize (3.0.0), should work on 2.x.
     sequelize_fixtures.loadFile('fixtures/*.json', models, { encoding: 'windows-1257'}).then(function(){
         doStuffAfterLoad();
     });
+
+    //load fixtures inside a transaction
+    sequelize.transaction(function(tx) {
+        sequelize_fixtures.loadFile('fixtures/*.json', models, { transaction: tx}).then(doStuffAfterLoad);
+    });
     
     //apply transform for each model being loaded
     sequelize_fixtures.loadFile('fixtures/*.json', models, {
