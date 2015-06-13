@@ -19,10 +19,11 @@
     "js-yaml": "~2.1.0"
   },
   "devDependencies": {
-    "sequelize": "*",
-    "sqlite3": "*",
     "mocha": "*",
-    "should": "*"
+    "sequelize": "*",
+    "should": "*",
+    "sinon": "^1.14.1",
+    "sqlite3": "*"
   },
   "repository": {
     "type": "git",

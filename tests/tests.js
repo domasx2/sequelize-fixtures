@@ -1,6 +1,9 @@
 var sf     = require('../index'),
     should = require('should'),
-    models = require('./models');
+    models = require('./models'),
+    Promise = require('bluebird'),
+    sinon = require('sinon')
+;
 
 beforeEach(function(){
     return models.sequelize.drop().then(function() {
@@ -442,5 +445,40 @@ describe('fixture (with promises)', function() {
                 producers.length.should.equal(1);
                 producers[0].name.should.equal('Arnie');
             });
+    });
+
+    it('if transaction specified, it should be passed to models', function(done) {
+        var FooMock = sinon.mock(models.Foo),
+            findDeferred = Promise.defer(),
+            saveDeferred = Promise.defer(),
+            data = {id: 3},
+            instance = models.Foo.build(),
+            instanceMock = sinon.mock(instance)
+        ;
+
+        models.sequelize.transaction(function(t) {
+            FooMock.expects('find').once().returns(findDeferred.promise).withExactArgs({
+                where : data,
+                transaction : t
+            });
+            findDeferred.resolve(null);
+
+            FooMock.expects('build').once().returns(instance);
+            instanceMock.expects('save').once().withExactArgs({
+                transaction : t
+            }).returns(saveDeferred.promise);
+            saveDeferred.resolve(null);
+
+            return sf.loadFixture({
+                model: 'Foo',
+                data: data
+            }, models, {transaction : t});
+        })
+        .then(function() {
+            instanceMock.verify();
+            FooMock.verify();
+            FooMock.restore();
+            done();
+        });
     });
 });
