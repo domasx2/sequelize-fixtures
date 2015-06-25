@@ -329,6 +329,22 @@ In case you want to detect duplicates based on specific field or fields rather t
 ```
 In this example only John will be loaded
 
+#### Skipping lookup fields
+
+By default, all fields are used to determine if the given fixture should be inserted. This behavior can be modified by using the `skipLookup` data attribute to exclude certain fields.
+
+```json
+{
+    "model": "Person",
+    "skipLookup": ["name"],
+    "data": {
+        "name": "John",
+        "email": "example@example.com",
+    }
+}
+```
+
+In the above example, only the `email` field will be used.
 
 # grunt task
 
