@@ -481,4 +481,33 @@ describe('fixture (with promises)', function() {
             done();
         });
     });
+
+    it('if transaction specified, should load many2many assocs by nat keys', function(done) {
+        models.sequelize.transaction(function(t) {
+            return sf.loadFile('tests/fixtures/many2manynatural.yaml', models, {transaction : t});
+        }).then(function() {
+            return models.Project.find({
+                where: {
+                    name: 'Great Project'
+                }
+            });
+        }).then(function(project) {
+            return project.getPeople();
+        }).then(function(persons) {
+            persons.length.should.equal(2);
+            var foundfirst = false;
+            var foundsecond = false;
+
+            persons.forEach(function(dude) {
+                if (dude.name === 'John') {
+                    foundfirst = true;
+                }
+                if (dude.name === 'Jack') {
+                    foundsecond = true;
+                }
+            });
+            foundfirst.should.equal(true);
+            foundsecond.should.equal(true);
+        }).then(done);
+    });
 });
