@@ -65,6 +65,18 @@ Tested with latest Sequelize (3.0.0), should work on 2.x.
         doStuffAfterLoad();
     });
 
+    //modify each model being loaded
+    sequelize_fixtures.loadFile('fixtures/*.json', models, {
+        modifyFixtureDataFn: function (data) {
+          if(!data.createdAt) {
+            data.createdAt = new Date();
+          }
+          return data;
+        }
+    }).then(function() {
+        doStuffAfterLoad();
+    });
+
     //from array
     var fixtures = [
         {
