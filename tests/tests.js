@@ -510,4 +510,40 @@ describe('fixture (with promises)', function() {
             foundsecond.should.equal(true);
         }).then(done);
     });
+
+    it('should load fixtures and then transform their values', function() {
+        return sf.loadFile('tests/fixtures/fixture1.json', models, { 
+            transformFixtureDataFn: function (data, model) {
+                if (model.name === 'bar') {
+                  data.propB = 99; 
+                }
+                return data;
+            }
+        }).then(function() {
+            return models.Bar.findAll();
+        }).then(function(bars){
+            bars.forEach(function(bar) {
+              bar.propB.should.equal(99);
+            });
+        });
+    });
+
+    it('should load user modified fixtures', function() {
+        return sf.loadFile('tests/fixtures/fixture1.json', models, { 
+            modifyFixtureDataFn: function (data, model) {
+                if (model.name === 'foo') {
+                  delete data.propB;
+                  data.status = true; 
+                }
+                return data;
+            }
+        }).then(function() {
+            return models.Foo.findAll();
+        }).then(function(foos){
+            foos.forEach(function(foo) {
+              (foo.propB === null).should.equal(true);
+              foo.status.should.equal(true);
+            });
+        });
+    });
 });
