@@ -6,10 +6,10 @@ Sequelize fixtures
 This is a simple lib to load data to database using sequelize.  
 It is intended for easily setting up test data.  
 Yaml and json formats are supported. Includes a grunt task.  
-Duplicate records are not insertd.
+Duplicate records are not inserted.
 API returns bluebird promises, but callbacks can also be used as the last argument.  
 
-Tested with latest Sequelize (3.0.0), should work on 2.x.
+Tested with latest Sequelize (3.20.0), should work on 2.x.
 
 ### Install
     
