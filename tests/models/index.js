@@ -5,9 +5,11 @@ var Sequelize = require('sequelize'),
         logging: false
 });
 
+    
+
 exports.sequelize = sequelize;
 exports.all = [];
-['Foo', 'Bar', 'Article', 'Person', 'Project', 'Actor', 'Movie', 'Producer', 'Play'].forEach( function (model) {
+['Foo', 'Bar', 'Article', 'Person', 'Project', 'Actor', 'Movie', 'Producer', 'Play', 'JsonbTestModel'].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
     exports.all.push(mod);

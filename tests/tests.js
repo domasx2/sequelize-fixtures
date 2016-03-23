@@ -546,4 +546,25 @@ describe('fixture (with promises)', function() {
             });
         });
     });
+
+    /* postgres only
+    it('should handle jsonb fields', function() {
+        return  sf.loadFile('tests/fixtures/jsonb.json', models)
+        .then(function() {
+            return sf.loadFile('tests/fixtures/jsonb.json', models);
+        })
+        .then(function() {
+            return models.JsonbTestModel.findAll();
+        })
+        .then(function(result) {
+            result.length.should.equal(1);
+            JSON.stringify(result[0].props).should.equal(JSON.stringify({
+                "a": {
+                    "b":1,
+                },
+                "b": [1, {"c":2}]
+            }));
+        });
+    });
+    */
 });
