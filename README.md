@@ -294,6 +294,41 @@ Or an array of property-value mappings to find the entities with:
 ]
 ```
 
+If you have a custom through model for a m2m relationship, you can set additional attributes using `_through`:
+
+```javascript
+ActorsMovies = sequelize.define("ActorsMovies", {
+    character: {type: DataTypes.STRING}
+});
+Movie.belongsToMany(Actor, {through: ActorsMovies});
+Actor.belongsToMany(Movie, {through: ActorsMovies});
+```
+
+```json
+[
+    {
+        model: 'Movie',
+        data: {
+            name: 'Terminator'      
+        }
+    },
+    {
+        model: 'Actor',
+        data: {
+            name: 'Arnie',
+            movies: [
+                {
+                    name: 'Terminator',
+                    _through: {
+                        character: 'T-80'
+                    }
+                }
+            ]
+        }
+    }
+]
+```
+
 #### Build options, save optons
 
 For each model you can provide build options that are passed to Model.build() and save options that are passed to instance.save(), example:

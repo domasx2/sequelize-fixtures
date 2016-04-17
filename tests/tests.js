@@ -547,6 +547,96 @@ describe('fixture (with promises)', function() {
         });
     });
 
+    it('should add attributes to many2many through table', function() {
+        return sf.loadFixtures([
+            {
+                model: 'Movie',
+                data: {
+                    id:1,
+                    name: 'Terminator'      
+                }
+            },
+            {
+            
+                model: 'Actor',
+                data: {
+                    id: 1,
+                    name: 'Arnie',
+                    movies: [
+                        {
+                            name: 'Terminator',
+                            _through: {
+                                character: 'T-80'
+                            }
+                        }
+                    ]
+                }
+            }
+        ], models)
+        .then(function() {
+            return models.Actor.findOne({
+                where: {
+                    name: 'Arnie'
+                }
+            });
+        })
+        .then(function(arnie) {
+            should.exist(arnie);
+            return arnie.getMovies();
+        })
+        .then(function(movies) {
+            should.exist(movies);
+            movies.length.should.equal(1);
+            should.exist(movies[0].ActorsMovies.character);
+            movies[0].ActorsMovies.character.should.equal('T-80');
+        });
+    });
+
+    it('should add attributes to many2many through table using ids', function() {
+        return sf.loadFixtures([
+            {
+                model: 'Movie',
+                data: {
+                    id:3,
+                    name: 'Terminator'      
+                }
+            },
+            {
+            
+                model: 'Actor',
+                data: {
+                    id: 1,
+                    name: 'Arnie',
+                    movies: [
+                        {
+                            id: 3,
+                            _through: {
+                                character: 'T-80'
+                            }
+                        }
+                    ]
+                }
+            }
+        ], models)
+        .then(function() {
+            return models.Actor.findOne({
+                where: {
+                    name: 'Arnie'
+                }
+            });
+        })
+        .then(function(arnie) {
+            should.exist(arnie);
+            return arnie.getMovies();
+        })
+        .then(function(movies) {
+            should.exist(movies);
+            movies.length.should.equal(1);
+            should.exist(movies[0].ActorsMovies.character);
+            movies[0].ActorsMovies.character.should.equal('T-80');
+        });
+    });
+
     /* postgres only
     it('should handle jsonb fields', function() {
         return  sf.loadFile('tests/fixtures/jsonb.json', models)

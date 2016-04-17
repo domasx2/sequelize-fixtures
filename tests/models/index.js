@@ -9,7 +9,7 @@ var Sequelize = require('sequelize'),
 
 exports.sequelize = sequelize;
 exports.all = [];
-['Foo', 'Bar', 'Article', 'Person', 'Project', 'Actor', 'Movie', 'Producer', 'Play', 'JsonbTestModel'].forEach( function (model) {
+['Foo', 'Bar', 'Article', 'Person', 'Project', 'Actor', 'Movie', 'Producer', 'Play', 'JsonbTestModel', 'ActorsMovies'].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
     exports.all.push(mod);
@@ -20,10 +20,10 @@ exports.all = [];
     m.Bar.hasMany(m.Foo);
     m.Project.belongsToMany(m.Person, {through: 'peopleprojects'});
     m.Person.belongsToMany(m.Project, {through: 'peopleprojects'});
-    m.Actor.belongsToMany(m.Movie, {through: 'actorsmovies'});
+    m.Actor.belongsToMany(m.Movie, {through: m.ActorsMovies});
     m.Producer.belongsTo(m.Movie);
     m.Movie.hasMany(m.Producer);
     m.Producer.belongsTo(m.Play);
     m.Play.hasMany(m.Producer);
-    m.Movie.belongsToMany(m.Actor, {through: 'actorsmovies'});
+    m.Movie.belongsToMany(m.Actor, {through: m.ActorsMovies});
 })(exports);
