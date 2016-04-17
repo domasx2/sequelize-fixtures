@@ -307,20 +307,20 @@ Actor.belongsToMany(Movie, {through: ActorsMovies});
 ```json
 [
     {
-        model: 'Movie',
-        data: {
-            name: 'Terminator'      
+        "model": "Movie",
+        "data": {
+            "name": "Terminator"      
         }
     },
     {
-        model: 'Actor',
-        data: {
-            name: 'Arnie',
-            movies: [
+        "model": "Actor",
+        "data": {
+            "name": "Arnie",
+            "movies": [
                 {
-                    name: 'Terminator',
-                    _through: {
-                        character: 'T-80'
+                    "name": "Terminator",
+                    "_through": {
+                        "character": "T-80"
                     }
                 }
             ]
