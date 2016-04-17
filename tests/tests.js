@@ -224,6 +224,14 @@ describe('fixture (with promises)', function() {
             });
     });
 
+    it('should throw errors if files are missing', function(done) {
+        return sf.loadFile('tests/fixtures/fixture_that_does_not_exist.json', models)
+            .catch(function(err) {
+                err.message.should.equal('No files matching \'tests/fixtures/fixture_that_does_not_exist.json\' found.');
+                done();
+            });
+    });
+
     it('should load assosication with. natural keys', function() {
         return sf.loadFile('tests/fixtures/natkeys.yaml', models)
             .then(function() {

@@ -329,7 +329,7 @@ Actor.belongsToMany(Movie, {through: ActorsMovies});
 ]
 ```
 
-#### Build options, save optons
+#### Build options, save options
 
 For each model you can provide build options that are passed to Model.build() and save options that are passed to instance.save(), example:
 
