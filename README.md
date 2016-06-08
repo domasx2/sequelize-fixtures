@@ -22,10 +22,12 @@ Tested with latest Sequelize (3.20.0), should work on 2.x.
 ### Usage
 
 ```javascript
-    var sequelize_fixtures = require('sequelize-fixtures'),
-        models = {
-            Foo: require('./models/Foo')
-        };
+    const sequelize_fixtures = require('sequelize-fixtures');
+
+    //a map of [model name] : model
+    //see offical example on how to load models
+    //https://github.com/sequelize/express-example/blob/master/models/index.js
+    const models = require('./models'); 
 
     //from file
     sequelize_fixtures.loadFile('fixtures/test_data.json', models).then(function(){
