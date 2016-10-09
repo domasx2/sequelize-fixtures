@@ -6,9 +6,7 @@ var sf     = require('../index'),
 ;
 
 beforeEach(function(){
-    return models.sequelize.drop().then(function() {
-        return models.sequelize.sync();
-    });
+    return models.sequelize.sync({force: true});
 });
 
 var FOO_FIXTURE = {
