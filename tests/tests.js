@@ -224,11 +224,10 @@ describe('fixture (with promises)', function() {
             });
     });
 
-    it('should throw errors if files are missing', function(done) {
+    it('should throw errors if files are missing', function() {
         return sf.loadFile('tests/fixtures/fixture_that_does_not_exist.json', models)
             .catch(function(err) {
                 err.message.should.equal('No files matching \'tests/fixtures/fixture_that_does_not_exist.json\' found.');
-                done();
             });
     });
 
