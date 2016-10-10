@@ -517,10 +517,10 @@ describe('fixture (with promises)', function() {
     });
 
     it('should load fixtures and then transform their values', function() {
-        return sf.loadFile('tests/fixtures/fixture1.json', models, { 
+        return sf.loadFile('tests/fixtures/fixture1.json', models, {
             transformFixtureDataFn: function (data, model) {
                 if (model.name === 'bar') {
-                  data.propB = 99; 
+                  data.propB = 99;
                 }
                 return data;
             }
@@ -534,11 +534,11 @@ describe('fixture (with promises)', function() {
     });
 
     it('should load user modified fixtures', function() {
-        return sf.loadFile('tests/fixtures/fixture1.json', models, { 
+        return sf.loadFile('tests/fixtures/fixture1.json', models, {
             modifyFixtureDataFn: function (data, model) {
                 if (model.name === 'foo') {
                   delete data.propB;
-                  data.status = true; 
+                  data.status = true;
                 }
                 return data;
             }
@@ -558,11 +558,11 @@ describe('fixture (with promises)', function() {
                 model: 'Movie',
                 data: {
                     id:1,
-                    name: 'Terminator'      
+                    name: 'Terminator'
                 }
             },
             {
-            
+
                 model: 'Actor',
                 data: {
                     id: 1,
@@ -597,17 +597,27 @@ describe('fixture (with promises)', function() {
         });
     });
 
+    it('should perform a set operation if one exists', function() {
+      return sf.loadFile('tests/fixtures/serializedJsonFixture.js', models)
+        .then(function() {
+            return models.JsonSerializedTestModel.findAll();
+        }).then(function(models) {
+            models.length.should.equal(1);
+            models[0].permissions.should.match({'*': '*'});
+        });
+    });
+
     it('should add attributes to many2many through table using ids', function() {
         return sf.loadFixtures([
             {
                 model: 'Movie',
                 data: {
                     id:3,
-                    name: 'Terminator'      
+                    name: 'Terminator'
                 }
             },
             {
-            
+
                 model: 'Actor',
                 data: {
                     id: 1,

@@ -5,11 +5,24 @@ var Sequelize = require('sequelize'),
         logging: false
 });
 
-    
+
 
 exports.sequelize = sequelize;
 exports.all = [];
-['Foo', 'Bar', 'Article', 'Person', 'Project', 'Actor', 'Movie', 'Producer', 'Play', 'JsonbTestModel', 'ActorsMovies'].forEach( function (model) {
+[
+    'Foo',
+    'Bar',
+    'Article',
+    'Person',
+    'Project',
+    'Actor',
+    'Movie',
+    'Producer',
+    'Play',
+    'JsonbTestModel',
+    'JsonSerializedTestModel',
+    'ActorsMovies'
+].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
     exports.all.push(mod);
