@@ -21,7 +21,8 @@ exports.all = [];
     'Play',
     'JsonbTestModel',
     'JsonSerializedTestModel',
-    'ActorsMovies'
+    'ActorsMovies',
+    'Account'
 ].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
