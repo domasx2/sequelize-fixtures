@@ -652,6 +652,18 @@ describe('fixture (with promises)', function() {
         });
     });
 
+    it('should exclude VIRTUAL columns from filter condition', function() {
+      return sf.loadFile('tests/fixtures/virtual.js', models)
+        .then(function() {
+          return models.Account.findOne({
+            where: {
+              name: 'John'
+            }
+          });
+        }).then(function(account) {
+          should.exist(account);
+        });
+    });
     /* postgres only
     it('should handle jsonb fields', function() {
         return  sf.loadFile('tests/fixtures/jsonb.json', models)
