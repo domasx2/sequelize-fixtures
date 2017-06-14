@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('database', 'username', 'password', {
         dialect: 'sqlite',
-        storage: 'testdb.sqlite',
+        storage: ':memory:',
         logging: false
 });
 
