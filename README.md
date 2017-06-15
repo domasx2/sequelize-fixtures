@@ -9,14 +9,14 @@ Yaml and json formats are supported. Includes a grunt task.
 Duplicate records are not inserted.
 API returns bluebird promises, but callbacks can also be used as the last argument.  
 
-Tested with latest Sequelize (3.30), should work on 2.x. In v4.x.x broken `BelongsToMany through` logic, may work unstable.
+Tested with latest Sequelize (3.30), should work on 2.x. In v4.x.x `BelongsToMany through` logic is broken.
 
 ### Install
-    
+
     npm install sequelize-fixtures
 
 ### Test
-    
+
     npm test
 
 ### Usage
@@ -27,7 +27,7 @@ Tested with latest Sequelize (3.30), should work on 2.x. In v4.x.x broken `Belon
     //a map of [model name] : model
     //see offical example on how to load models
     //https://github.com/sequelize/express-example/blob/master/models/index.js
-    const models = require('./models'); 
+    const models = require('./models');
 
     //from file
     sequelize_fixtures.loadFile('fixtures/test_data.json', models).then(function(){
@@ -53,12 +53,12 @@ Tested with latest Sequelize (3.30), should work on 2.x. In v4.x.x broken `Belon
     sequelize.transaction(function(tx) {
         sequelize_fixtures.loadFile('fixtures/*.json', models, { transaction: tx}).then(doStuffAfterLoad);
     });
-    
+
     //apply transform for each model being loaded
     sequelize_fixtures.loadFile('fixtures/*.json', models, {
         transformFixtureDataFn: function (data) {
-          if(data.createdAt 
-           && data.createdAt < 0) { 
+          if(data.createdAt
+           && data.createdAt < 0) {
             data.createdAt = new Date((new Date()).getTime() + parseFloat(data.createdAt) * 1000 * 60);
           }
           return data;
@@ -161,13 +161,13 @@ Tested with latest Sequelize (3.30), should work on 2.x. In v4.x.x broken `Belon
 ```
 
 
-### Associations 
+### Associations
 
 You can specify associations by providing related object id or a where clause to select associated object with. Make sure associated objects are described before associations!
 
 #### One to many
 
-Assuming 
+Assuming
 ```javascript
 Car.belongsTo(Owner);
 Owner.hasMany(Car);
@@ -211,7 +211,7 @@ Or a property-value map (like a 'where' object) to find the entity with:
         "data": {
             "make": "Ford",
             "owner": {
-                "name": "John Doe" 
+                "name": "John Doe"
             }
         }
     }
@@ -220,7 +220,7 @@ Or a property-value map (like a 'where' object) to find the entity with:
 
 #### Many to many
 
-Assuming 
+Assuming
 
 ```javascript
 Project.belongsToMany(Person, {through: 'peopleprojects'});
@@ -338,12 +338,12 @@ For each model you can provide build options that are passed to Model.build() an
 ```json
 {
     "model": "Article",
-    "buildOptions": { 
-        "raw": true, 
+    "buildOptions": {
+        "raw": true,
         "isNewRecord": true
     },
-    "saveOptions": { 
-        "fields": ["title", "body"] 
+    "saveOptions": {
+        "fields": ["title", "body"]
     },
     "data": {
         "title": "Any title",
@@ -389,7 +389,7 @@ Gruntfile.js:
             import_test_data: {
                 src: ['fixtures/data1.json', 'fixtures/models*.json'],
                 models: function () {  //returns mapping model name: model
-                    return require('../models') 
+                    return require('../models')
                 },
                 options: { //specify encoding, optiona. default utf-8
                     encoding: 'windows-1257'
