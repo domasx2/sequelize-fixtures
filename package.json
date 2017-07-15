@@ -21,11 +21,7 @@
   },
   "devDependencies": {
     "mocha": "*",
-<<<<<<< HEAD
-    "sequelize": "^3.0.0",
-=======
     "sequelize": "^4.0.0-2",
->>>>>>> 8817e6c2a76dff215239771abb21f42541a7a698
     "should": "*",
     "sinon": "^1.14.1",
     "sqlite3": "*"
