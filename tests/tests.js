@@ -150,6 +150,15 @@ describe('fixture (with promises)', function() {
             });
     });
 
+    it('should return model count and models', function() {
+        return sf.loadFile('tests/fixtures/fixture1.json', models)
+            .then(function(retVal) {
+                retVal.count.should.equal(3);
+                retVal.models.foo.length.should.equal(2);
+                retVal.models.bar.length.should.equal(1);
+            });
+    });
+
     it('should load fixtures from js (implied relative)', function() {
         return sf.loadFile('tests/fixtures/fixture1.js', models)
             .then(function() {
