@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize('database', 'username', 'password', {
         dialect: 'sqlite',
-        storage: 'testdb.sqlite',
+        storage: ':memory:',
         logging: false
 });
 
@@ -21,7 +21,8 @@ exports.all = [];
     'Play',
     'JsonbTestModel',
     'JsonSerializedTestModel',
-    'ActorsMovies'
+    'ActorsMovies',
+    'Account'
 ].forEach( function (model) {
     var mod = sequelize.import(__dirname + '/' + model);
     module.exports[model] = mod;
