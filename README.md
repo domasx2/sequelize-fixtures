@@ -9,7 +9,7 @@ Yaml and json formats are supported. Includes a grunt task.
 Duplicate records are not inserted.
 API returns bluebird promises, but callbacks can also be used as the last argument.  
 
-Tested with latest Sequelize (3.30), should work on 2.x. In v4.x.x `BelongsToMany through` logic is broken.
+Tested with latest Sequelize (4.0)
 
 ### Install
 
