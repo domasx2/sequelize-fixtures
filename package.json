@@ -4,7 +4,7 @@
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha $NODE_DEBUG_OPTION tests"
+    "test": "./node_modules/.bin/mocha tests"
   },
   "engines": {
     "node": "*"
