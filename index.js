@@ -1,5 +1,6 @@
 var Loader = require('./lib/loader'),
-    Reader = require('./lib/reader');
+  Reader = require('./lib/reader'),
+  Writer = require('./lib/writer');
 
 function initopts(options){
     options = options || {};
@@ -34,26 +35,38 @@ function wrap(fn) {
     };
 }
 
-exports.loadFixture = wrap(function(fixture, models, options) {
-    var loader = new Loader(options);
-    return loader.loadFixture(fixture, models);
+exports.loadFixture = wrap(function (fixture, models, options) {
+  return exports.loadFixtures([fixture], models, options);
 });
 
-exports.loadFixtures = wrap(function(fixtures, models, options) {
-    var loader = new Loader(options);
-    return loader.loadFixtures(fixtures, models);
-});
+exports.loadFixtures = wrap(function (fixtures, models, options) {
+  var loader = new Loader(options);
+  return loader.loadFixtures(fixtures, models)
+    .then(function (result) {
+      if (!options.referenceFile) {
+        return result;
+      }
 
-exports.loadFile = wrap(function(filename, models, options) {
-    var loader = new Loader(options), reader = new Reader(options);
-    return reader.readFileGlob(filename).then(function(fixtures) {
-        return loader.loadFixtures(fixtures, models);
+      var writer = new Writer(options);
+      return writer.writeFile(options.referenceFile, loader.reference)
+        .then(function () {
+          return result;
+        });
     });
 });
 
-exports.loadFiles = wrap(function(filenames, models, options) {
-    var loader = new Loader(options), reader = new Reader(options);
-    return reader.readFiles(filenames).then(function(fixtures){
-        return loader.loadFixtures(fixtures, models);
+exports.loadFile = wrap(function (filename, models, options) {
+  var reader = new Reader(options);
+  return reader.readFileGlob(filename)
+    .then(function (fixtures) {
+      return exports.loadFixtures(fixtures, models, options);
+    });
+});
+
+exports.loadFiles = wrap(function (filenames, models, options) {
+  var reader = new Reader(options);
+  return reader.readFiles(filenames)
+    .then(function (fixtures) {
+      return exports.loadFixtures(fixtures, models, options);
     });
 });
