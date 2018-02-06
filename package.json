@@ -14,7 +14,7 @@
     "fixtures"
   ],
   "dependencies": {
-    "bluebird": "^2.4.2",
+    "bluebird": "^3.5.1",
     "glob": "~7.0.5",
     "js-yaml": "~2.1.0",
     "object-assign": "^4.0.1"
