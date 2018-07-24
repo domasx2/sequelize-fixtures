@@ -664,6 +664,16 @@ describe('fixture (with promises)', function() {
           should.exist(account);
         });
     });
+
+    it('should handle json including arrays', function() {
+      return sf.loadFile('tests/fixtures/jsonContainingArray.js', models)
+        .then(function() {
+            return models.SimpleJson.findAll();
+        }).then(function(models) {
+            models.length.should.equal(1);
+            models[0].props.should.match({"home": ["latest", "get"]});
+        });
+    });
     /* postgres only
     it('should handle jsonb fields', function() {
         return  sf.loadFile('tests/fixtures/jsonb.json', models)
