@@ -16,7 +16,7 @@
   "dependencies": {
     "bluebird": "^2.4.2",
     "glob": "~7.0.5",
-    "js-yaml": "~2.1.0",
+    "js-yaml": "^3.3.5",
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
