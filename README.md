@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/domasx2/sequelize-fixtures.svg?branch=master)](https://travis-ci.org/domasx2/sequelize-fixtures)
 
+**I'm no longer using Sequelize or this lib, and have very little motivation to maintain it. If someone wants to take over, let me know!**
+
 Sequelize fixtures
 ==========================================
 
