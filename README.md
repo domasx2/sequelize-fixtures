@@ -11,7 +11,7 @@ Yaml and json formats are supported. Includes a grunt task.
 Duplicate records are not inserted.
 API returns bluebird promises, but callbacks can also be used as the last argument.  
 
-Tested with latest Sequelize (4.0)
+Tested with latest Sequelize (5.0)
 
 ### Install
 
