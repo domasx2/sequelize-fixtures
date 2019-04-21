@@ -1,6 +1,6 @@
 {
   "name": "sequelize-fixtures",
-  "version": "0.7.0",
+  "version": "0.10.0",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
@@ -16,12 +16,12 @@
   "dependencies": {
     "bluebird": "^2.4.2",
     "glob": "~7.0.5",
-    "js-yaml": "~2.1.0",
+    "js-yaml": "^3.13.0",
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "mocha": "*",
-    "sequelize": "^4.0.0",
+    "sequelize": "^5.0.0",
     "should": "*",
     "sinon": "^1.14.1",
     "sqlite3": "*"

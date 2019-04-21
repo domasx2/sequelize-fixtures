@@ -21,7 +21,7 @@ describe('fixture (with promises)', function() {
     it('should load fixture without id', function() {
         return sf.loadFixture(FOO_FIXTURE, models)
             .then(function() {
-                return models.Foo.find({
+                return models.Foo.findOne({
                     where: {
                         propA: 'bar',
                         propB: 1
@@ -43,7 +43,7 @@ describe('fixture (with promises)', function() {
                 propB: 1
             }
         }, models).then(function() {
-            return models.Foo.find({where: {id: 3}});
+            return models.Foo.findOne({where: {id: 3}});
         }).then(function(foo){
             should.exist(foo);
             foo.propA.should.equal('bar');
@@ -60,7 +60,7 @@ describe('fixture (with promises)', function() {
                 slug: 'My Invalid Slug'
             }
         }, models).then(function() {
-            return models.Article.find({
+            return models.Article.findOne({
                 where: {
                     title: 'Any title'
                 }
@@ -80,7 +80,7 @@ describe('fixture (with promises)', function() {
                 body: 'My nice article'
             }
         }, models).then(function() {
-            return models.Article.find({
+            return models.Article.findOne({
                 where: {
                     title: 'Any title'
                 }
@@ -259,7 +259,7 @@ describe('fixture (with promises)', function() {
     it('should load many2many assocs by nat keys', function() {
         return sf.loadFile('tests/fixtures/many2manynatural.yaml', models)
             .then(function() {
-                return models.Project.find({
+                return models.Project.findOne({
                     where: {
                         name: 'Great Project'
                     }
@@ -286,7 +286,7 @@ describe('fixture (with promises)', function() {
 
     it('should load belongs 2 many assocs by nat keys', function(done) {
         sf.loadFile('tests/fixtures/many2manynatural.yaml', models).then(function() {
-            models.Movie.find({
+            models.Movie.findOne({
                 where: {
                     name: 'Matrix 4'
                 }
@@ -313,7 +313,7 @@ describe('fixture (with promises)', function() {
 
     it('should load belongs 2 many assocs by ids', function(done) {
         sf.loadFile('tests/fixtures/many2manyid.yaml', models).then(function() {
-            models.Movie.find({
+            models.Movie.findOne({
                 where: {
                     name: 'Matrix 4'
                 }
@@ -341,7 +341,7 @@ describe('fixture (with promises)', function() {
     it('empty many2many should not break', function() {
         return sf.loadFile('tests/fixtures/many2manynatural.yaml', models)
             .then(function() {
-                return models.Project.find({
+                return models.Project.findOne({
                     where: {
                         name: 'Bad Project'
                     }
@@ -356,7 +356,7 @@ describe('fixture (with promises)', function() {
     it('should load many2many assocs by ids', function() {
         return sf.loadFile('tests/fixtures/many2manyid.yaml', models)
             .then(function() {
-                return models.Project.find({
+                return models.Project.findOne({
                     where: {
                         name: 'Stoopid Project'
                     }
@@ -383,7 +383,7 @@ describe('fixture (with promises)', function() {
     it('should set many2many even if object already exists', function() {
         return sf.loadFile('tests/fixtures/many2manynatural.yaml', models)
             .then(function() {
-                return models.Project.find({
+                return models.Project.findOne({
                     where: {
                         name: 'Bad Project'
                     }
@@ -423,7 +423,7 @@ describe('fixture (with promises)', function() {
     it('should handle primary keys not named "id" for has many', function() {
         return sf.loadFile('tests/fixtures/custompk.yaml', models)
             .then(function() {
-                return models.Movie.find({
+                return models.Movie.findOne({
                     where: {
                         name: 'Pirates of the Baltic Sea'
                     }
@@ -439,7 +439,7 @@ describe('fixture (with promises)', function() {
     it('should handle primary keys not named "id" for belongs to', function() {
         return sf.loadFile('tests/fixtures/custompk.yaml', models)
             .then(function() {
-                return models.Play.find({
+                return models.Play.findOne({
                     where: {
                         name: 'Book of Jesus'
                     }
@@ -462,7 +462,7 @@ describe('fixture (with promises)', function() {
         ;
 
         models.sequelize.transaction(function(t) {
-            FooMock.expects('find').once().returns(findDeferred.promise).withExactArgs({
+            FooMock.expects('findOne').once().returns(findDeferred.promise).withExactArgs({
                 where : data,
                 transaction : t
             });
@@ -491,7 +491,7 @@ describe('fixture (with promises)', function() {
         models.sequelize.transaction(function(t) {
             return sf.loadFile('tests/fixtures/many2manynatural.yaml', models, {transaction : t});
         }).then(function() {
-            return models.Project.find({
+            return models.Project.findOne({
                 where: {
                     name: 'Great Project'
                 }
@@ -662,6 +662,16 @@ describe('fixture (with promises)', function() {
           });
         }).then(function(account) {
           should.exist(account);
+        });
+    });
+
+    it('should handle json including arrays', function() {
+      return sf.loadFile('tests/fixtures/jsonContainingArray.js', models)
+        .then(function() {
+            return models.SimpleJson.findAll();
+        }).then(function(models) {
+            models.length.should.equal(1);
+            models[0].props.should.match({"home": ["latest", "get"]});
         });
     });
     /* postgres only
