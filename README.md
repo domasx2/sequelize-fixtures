@@ -381,6 +381,52 @@ In case you want to detect duplicates based on specific field or fields rather t
 In this example only John will be loaded
 
 
+
+#### Ignore setters (`ignoreSet`)
+
+By default, this library attempts to run values through any defined property setters to coerce the value correctly.
+If you use instance methods (other than `setDataValue`, which a mock is created for), then this will raise an error.
+
+For example:
+
+```javascript
+const User = sequelize.define('User',
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    validate: {
+      isEmail: true,
+    },
+    set: function set(val) {
+      if (this.previous('email')) { // <--- this line will raise an error
+        // check some thing
+      }
+      this.setDataValue('email', val);
+    }
+  }
+});
+```
+
+ You can turn off this behavior by setting `ignoreSet` to true.
+
+ ```json
+ {
+     "model": "User",
+     "ignoreSet": true,
+     "saveOptions": {
+         "fields": ["title", "body"]
+     },
+     "data": {
+         "title": "Any title",
+         "slug": "My Invalid Slug"
+     }
+ }
+ ```
+
+ This ignores any defined setters for this model and instead just set the value
+ as the same data literal specified in the fixture.
+
+
 # grunt task
 
 Gruntfile.js:
