@@ -51,6 +51,14 @@ Tested with latest Sequelize (5.0)
         doStuffAfterLoad();
     });
 
+    //specify logging function (default console.log)
+    function myLogging(defaultLog) {
+        console.log('Fixtures: processing ...')
+    }
+    sequelize_fixtures.loadFile('fixtures/*.json', models, { log: myLogging}).then(function(){
+        doStuffAfterLoad();
+    });
+
     //load fixtures inside a transaction
     sequelize.transaction(function(tx) {
         sequelize_fixtures.loadFile('fixtures/*.json', models, { transaction: tx}).then(doStuffAfterLoad);
