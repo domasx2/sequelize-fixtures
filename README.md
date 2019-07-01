@@ -363,7 +363,7 @@ For each model you can provide build options that are passed to Model.build() an
 
 #### Detect duplicates based on select fields
 
-In case you want to detect duplicates based on specific field or fields rather than all fields (for example, don't include entities with the same id, even if other fields don't match), you can speficy these fields with a 'keys' property.
+In case you want to detect duplicates based on specific field or fields rather than all fields (for example, don't include entities with the same id, even if other fields don't match), you can specify these fields with a 'keys' property.
 
 ```json
 {
@@ -442,10 +442,12 @@ Gruntfile.js:
         fixtures: {
             import_test_data: {
                 src: ['fixtures/data1.json', 'fixtures/models*.json'],
-                models: function () {  //returns mapping model name: model
-                    return require('../models')
+                // supports async loading models
+                models: async function () {  
+                    return await loadModels();
                 },
-                options: { //specify encoding, optiona. default utf-8
+                options: {
+                    //specify encoding, optional default utf-8
                     encoding: 'windows-1257'
                 }
             }
