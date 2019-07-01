@@ -4,6 +4,7 @@
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
+    "release": "release-it",
     "test": "./node_modules/.bin/mocha tests"
   },
   "engines": {
@@ -16,11 +17,12 @@
   "dependencies": {
     "bluebird": "^2.4.2",
     "glob": "~7.0.5",
-    "js-yaml": "^3.13.0",
+    "js-yaml": "^3.13.1",
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
     "mocha": "*",
+    "release-it": "^12.3.0",
     "sequelize": "^5.0.0",
     "should": "*",
     "sinon": "^1.14.1",
@@ -35,5 +37,19 @@
   },
   "author": "Domas Lapinskas <domasx2@gmail.com>",
   "license": "BSD",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "release-it": {
+    "git": {
+      "commit": true,
+      "tag": true,
+      "push": true
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "private": true,
+      "publish": false
+    }
+  }
 }
