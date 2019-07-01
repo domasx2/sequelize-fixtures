@@ -48,8 +48,7 @@
       "release": true
     },
     "npm": {
-      "private": true,
-      "publish": false
+      "publish": true
     }
   }
 }
