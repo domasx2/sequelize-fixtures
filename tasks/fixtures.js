@@ -14,8 +14,8 @@ module.exports = function(grunt) {
                 });
                 if (sources.length) {
                     sf.loadFiles(sources, models, options)
-                        .then(function(numSaved) {
-                            grunt.log.ok(numSaved + ' fixtures loaded.');
+                        .then(function(result) {
+                            grunt.log.ok(result.count + ' fixtures loaded.');
                             done();
                         });
                 } else {
