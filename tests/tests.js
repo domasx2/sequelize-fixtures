@@ -17,9 +17,20 @@ var FOO_FIXTURE = {
     }
 };
 
+var noopLogger = {
+  debug: function() {},
+  info: function() {},
+  warn: function() {},
+  error: function() {},
+};
+
+var options = {
+  logger: noopLogger
+};
+
 describe('fixture (with promises)', function() {
     it('should load fixture without id', function() {
-        return sf.loadFixture(FOO_FIXTURE, models)
+        return sf.loadFixture(FOO_FIXTURE, models, options)
             .then(function() {
                 return models.Foo.findOne({
                     where: {
@@ -42,7 +53,7 @@ describe('fixture (with promises)', function() {
                 propA: 'bar',
                 propB: 1
             }
-        }, models).then(function() {
+        }, models, options).then(function() {
             return models.Foo.findOne({where: {id: 3}});
         }).then(function(foo){
             should.exist(foo);
@@ -59,7 +70,7 @@ describe('fixture (with promises)', function() {
                 title: 'Any title',
                 slug: 'My Invalid Slug'
             }
-        }, models).then(function() {
+        }, models, options).then(function() {
             return models.Article.findOne({
                 where: {
                     title: 'Any title'
@@ -79,7 +90,7 @@ describe('fixture (with promises)', function() {
                 slug: 'my-slug',
                 body: 'My nice article'
             }
-        }, models).then(function() {
+        }, models, options).then(function() {
             return models.Article.findOne({
                 where: {
                     title: 'Any title'
@@ -91,9 +102,9 @@ describe('fixture (with promises)', function() {
     });
 
     it('should not duplicate fixtures', function () {
-        return sf.loadFixture(FOO_FIXTURE, models)
+        return sf.loadFixture(FOO_FIXTURE, models, options)
             .then(function() {
-                return sf.loadFixture(FOO_FIXTURE, models);
+                return sf.loadFixture(FOO_FIXTURE, models, options);
             }).then(function() {
                 return models.Foo.count({
                     where: {
@@ -112,7 +123,7 @@ describe('fixture (with promises)', function() {
                 propA: 'baz',
                 propB: 2
             }
-        }], models).then(function() {
+        }], models, options).then(function() {
             return models.Foo.count();
         }).then(function(c){
             c.should.equal(2);
@@ -127,7 +138,7 @@ describe('fixture (with promises)', function() {
                 propA: 'bar',
                 propB: 2
             }
-        }], models).then(function() {
+        }], models, options).then(function() {
             return models.Foo.count({
                 where: {
                     propA: 'bar'
@@ -139,7 +150,7 @@ describe('fixture (with promises)', function() {
     });
 
     it('should load fixtures from json', function() {
-        return sf.loadFile('tests/fixtures/fixture1.json', models)
+        return sf.loadFile('tests/fixtures/fixture1.json', models, options)
             .then(function() {
                 return models.Foo.count();
             }).then(function(c){
@@ -151,7 +162,7 @@ describe('fixture (with promises)', function() {
     });
 
     it('should return model count and models', function() {
-        return sf.loadFile('tests/fixtures/fixture1.json', models)
+        return sf.loadFile('tests/fixtures/fixture1.json', models, options)
             .then(function(retVal) {
                 retVal.count.should.equal(3);
                 retVal.models.foo.length.should.equal(2);
