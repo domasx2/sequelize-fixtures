@@ -1,4 +1,6 @@
 var sf = require('../index');
+var objectAssign = require('object-assign');
+var logger = require('./logger');
 
 module.exports = function(grunt) {
     grunt.task.registerMultiTask('fixtures', 'Load fixtures', function() {
@@ -6,7 +8,7 @@ module.exports = function(grunt) {
             data = this.data,
             models = data.models,
             done = this.async(),
-            options = data.options || {},
+            options = data.options,
             loadFiles = function(models) {
                 var sources = [];
                 taskInstance.files.forEach(function(f) {
@@ -24,7 +26,12 @@ module.exports = function(grunt) {
             };
 
         // link grunt logging to internal, if not specified
-        options.log = options.log || grunt.verbose.writeln;
+        options.logger = options.logger || {
+          debug: grunt.verbose.writeln,
+          info: grunt.log.writeln,
+          warn: grunt.fail.warn,
+          error: grunt.fail.fatal,
+        };
 
         if (typeof models == 'string') {
             grunt.verbose.writeln('Loading models using file path: ' + models);

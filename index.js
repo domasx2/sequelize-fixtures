@@ -4,7 +4,6 @@ var Loader = require('./lib/loader'),
 function initopts(options){
     options = options || {};
     options.encoding = options.encoding || 'utf8';
-    options.log = options.log || console.log;
     return options;
 }
 
