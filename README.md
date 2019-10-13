@@ -57,6 +57,22 @@ Tested with latest Sequelize (5.0)
         doStuffAfterLoad();
     });
 
+    //specify separate stdout and stderr streams
+    //(e.g. a winston-compatible logger)
+    function errorReporter(message) {
+      console.error('OH NO! ERROR: ' + message);
+    }
+    sequelize_fixtures.loadFile('fixtures/*.json', models, {
+      logger: {
+        debug: console.log,
+        info: console.log,
+        warn: console.log,
+        error: errorReporter
+      }
+    }).then(function(){
+        doStuffAfterLoad();
+    });
+
     //load fixtures inside a transaction
     sequelize.transaction(function(tx) {
         sequelize_fixtures.loadFile('fixtures/*.json', models, { transaction: tx}).then(doStuffAfterLoad);
