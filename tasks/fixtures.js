@@ -1,6 +1,6 @@
 var sf = require('../index');
 var objectAssign = require('object-assign');
-var logger = require('./logger');
+var logger = require('./../lib/logger');
 
 module.exports = function(grunt) {
     grunt.task.registerMultiTask('fixtures', 'Load fixtures', function() {
