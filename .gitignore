@@ -9,6 +9,8 @@ lib-cov
 *.pid
 *.gz
 *sublime*
+# Webstorm project conf files
+.idea/
 
 pids
 logs
