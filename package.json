@@ -1,6 +1,6 @@
 {
   "name": "sequelize-fixtures",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
@@ -21,12 +21,12 @@
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
-    "mocha": "*",
-    "release-it": "^12.3.0",
+    "mocha": "^8.0.1",
+    "release-it": "^13.6.3",
     "sequelize": "^5.0.0",
     "should": "*",
     "sinon": "^1.14.1",
-    "sqlite3": "*"
+    "sqlite3": "^4.1.1"
   },
   "repository": {
     "type": "git",
