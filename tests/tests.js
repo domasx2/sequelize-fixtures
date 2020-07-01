@@ -13,7 +13,8 @@ var FOO_FIXTURE = {
     model: 'Foo',
     data: {
         propA: 'bar',
-        propB: 1
+        propB: 1,
+        payload: { number: 1, string: 'value', array: [], null: null }
     }
 };
 
