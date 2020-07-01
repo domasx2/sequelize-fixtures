@@ -130,6 +130,31 @@ describe('fixture (with promises)', function() {
         });
     });
 
+    it('should load a fixture and create associated fixture', function() {
+        return sf.loadFixtures([{
+            model: 'Foo',
+            data: {
+                propA: 'baz',
+                propB: 2,
+                bar: {
+                    propA: 'barPropA',
+                    propB: 'barPropB'
+                }
+            },
+            buildOptions: {
+                include: [models.Bar]
+            }
+        }], models).then(function() {
+            return models.Foo.count();
+        }).then(function(c){
+            c.should.equal(1);
+
+            return models.Bar.count();
+        }).then(function(c){
+            c.should.equal(1);
+        });
+    });
+
     it('should not duplicate fixtures whose keys already exist', function() {
         return sf.loadFixtures([FOO_FIXTURE, {
             model: 'Foo',
