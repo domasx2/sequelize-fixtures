@@ -2,6 +2,7 @@ module.exports = function (sequelize, DataTypes) {
     return sequelize.define("foo", {
         propA: {type: DataTypes.STRING},
         propB: {type: DataTypes.INTEGER},
-        status: {type: DataTypes.BOOLEAN}
+        status: {type: DataTypes.BOOLEAN},
+        payload: {type: DataTypes.JSON}
     });
 };
