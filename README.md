@@ -26,7 +26,7 @@ Tested with latest Sequelize (5.0)
 
     //a map of [model name] : model
     //see offical example on how to load models
-    //https://github.com/sequelize/express-example/blob/master/models/index.js
+    //https://github.com/domasx2/sequelize-fixtures/blob/d4bb345b70a24f9d92c543de16a58e2c919097d6/tests/models/index.js#L29
     const models = require('./models');
 
     //from file
