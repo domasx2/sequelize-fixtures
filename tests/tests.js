@@ -617,6 +617,47 @@ describe('fixture (with promises)', function() {
         });
     });
 
+    it('should add options to many2many through table', function() {
+        sinon.spy(models.ActorsMovies, 'runHooks');
+        return sf.loadFixtures([
+            {
+                model: 'Movie',
+                data: {
+                    id:1,
+                    name: 'Terminator'
+                }
+            },
+            {
+
+                model: 'Actor',
+                data: {
+                    id: 1,
+                    name: 'Arnie',
+                    movies: [
+                        {
+                            name: 'Terminator',
+                            _through: {
+                                character: 'T-80'
+                            },
+                            _options: {
+                                individualHooks: true,
+                                otherOption: 1
+                            }
+                        }
+                    ]
+                }
+            }
+        ], models)
+        .then(function() {
+            models.ActorsMovies.runHooks.getCall(4).args[0].should.equal('beforeBulkCreate');
+            models.ActorsMovies.runHooks.getCall(4).args[2].should.match({
+                individualHooks: true,
+                otherOption: 1
+            });
+        });
+        sinon.restore(models.ActorsMovies, 'runHooks');
+    });
+
     it('should perform a set operation if one exists', function() {
       return sf.loadFile('tests/fixtures/serializedJsonFixture.js', models)
         .then(function() {
