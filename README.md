@@ -448,6 +448,34 @@ const User = sequelize.define('User',
  This ignores any defined setters for this model and instead just set the value
  as the same data literal specified in the fixture.
 
+#### Associations options
+
+If you have to pass custom options for associations accessors you can set additional attributes using `_options`:
+
+```json
+[
+    {
+        "model": "Movie",
+        "data": {
+            "name": "Terminator"
+        }
+    },
+    {
+        "model": "Actor",
+        "data": {
+            "name": "Arnie",
+            "movies": [
+                {
+                    "name": "Terminator",
+                    "_options": {
+                        individualHooks: true
+                    }
+                }
+            ]
+        }
+    }
+]
+```
 
 # grunt task
 
