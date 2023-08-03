@@ -1,9 +1,10 @@
 {
   "name": "sequelize-fixtures",
-  "version": "0.10.0",
+  "version": "2.0.0-jfo-2",
   "description": "sequelize fixture loader",
   "main": "index.js",
   "scripts": {
+    "release": "release-it",
     "test": "./node_modules/.bin/mocha tests"
   },
   "engines": {
@@ -14,17 +15,18 @@
     "fixtures"
   ],
   "dependencies": {
-    "bluebird": "^2.4.2",
+    "bluebird": "^3.5.1",
     "glob": "~7.0.5",
-    "js-yaml": "^3.13.0",
+    "js-yaml": "^3.13.1",
     "object-assign": "^4.0.1"
   },
   "devDependencies": {
-    "mocha": "*",
-    "sequelize": "^5.0.0",
+    "@sequelize/core": "^7.0.0-alpha.21",
+    "mocha": "^8.0.1",
+    "release-it": "^13.6.3",
     "should": "*",
     "sinon": "^1.14.1",
-    "sqlite3": "*"
+    "sqlite3": "^4.1.1"
   },
   "repository": {
     "type": "git",
@@ -35,5 +37,18 @@
   },
   "author": "Domas Lapinskas <domasx2@gmail.com>",
   "license": "BSD",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "release-it": {
+    "git": {
+      "commit": true,
+      "tag": true,
+      "push": true
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": true
+    }
+  }
 }
